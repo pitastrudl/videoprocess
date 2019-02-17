@@ -1,0 +1,10 @@
+*.mp4
+*.avi
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.zip
+octave-workspace
+
+skripte/octave-workspace
