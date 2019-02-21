@@ -1,5 +1,3 @@
-
-
 function [vect_mad, podvzorcene_slike, pot_do_video_posnetka]= generacija (video_posnetek) #varargin so argumenti
 pkg load video
 pkg load image
@@ -47,14 +45,6 @@ endfunction
 
 
 
-
-
-
-
-
-
-
-
 %md =strcat(direktorij,"/",pot,"_vect_mad.mat");
 %%ms= strcat(direktorij,"/",pot,"_vect_msd.mat");
 %save(md,'vect_mad');
@@ -88,28 +78,28 @@ endfunction
 %podvzorcene_slike = zeros(54 ,96,stevilo_elementov) ; #3D matrika init  
 %
 %#sprehajamo po datotekah. 
-for i = 1:stevilo_elementov 
-  #pot do slike
-  pot_do_slik = strcat(direktorij_slike,"/",seznam{i,1});
-  #beremo
-  slika = imread(pot_do_slik);
-  #resizamo 20x manjsi, seprav na to resolucijo
-  podvzorceno = imresize(slika,[54 96]);
-  #zgeneriramo ime kjer ga bo zapisal
-  newimg_name = strcat(podvzorcene_pot,'/',int2str(i),"podvzorceno.jpeg");
-  #damo v grayscale
-  #returnamo ce je ze v grajscale
-  if (size(podvzorceno, 3)) == 1
-    #printf ("this isnt a colormap....");
-  else 
-      podvzorceno = rgb2gray(podvzorceno);
-   end
-
- 
-  imwrite(podvzorceno,newimg_name); #zapišemo
-  #shranimo v variable
-  podvzorcene_slike(:,:,i) = podvzorceno;   %spremenil i iz i-2 %spet spremenil na i-2 ker drugace imamo nicle% spremenil na 1 ker smo sprmenil indexing
-end
+%for i = 1:stevilo_elementov 
+%  #pot do slike
+%  pot_do_slik = strcat(direktorij_slike,"/",seznam{i,1});
+%  #beremo
+%  slika = imread(pot_do_slik);
+%  #resizamo 20x manjsi, seprav na to resolucijo
+%  podvzorceno = imresize(slika,[54 96]);
+%  #zgeneriramo ime kjer ga bo zapisal
+%  newimg_name = strcat(podvzorcene_pot,'/',int2str(i),"podvzorceno.jpeg");
+%  #damo v grayscale
+%  #returnamo ce je ze v grajscale
+%  if (size(podvzorceno, 3)) == 1
+%    #printf ("this isnt a colormap....");
+%  else 
+%      podvzorceno = rgb2gray(podvzorceno);
+%   end
+%
+% 
+%  imwrite(podvzorceno,newimg_name); #zapišemo
+%  #shranimo v variable
+%  podvzorcene_slike(:,:,i) = podvzorceno;   %spremenil i iz i-2 %spet spremenil na i-2 ker drugace imamo nicle% spremenil na 1 ker smo sprmenil indexing
+%end
 %numel(podvzorcene_slike)
 %
 %

@@ -19,8 +19,10 @@ pkg load image
 [b seznam prvi drugi]= korelacija(mad_a,mad_b,pot_do_video_posnetka_a,pot_do_video_posnetka_b);
 
 
-imshow(podvzorcene_slike_a(:,:,96))
-figure, imshow(podvzorcene_slike_b(:,:,1))
+
+
+%imshow(podvzorcene_slike_a(:,:,213))
+%figure, imshow(podvzorcene_slike_b(:,:,1))
 %plot(v3)
 
 %[a,b,c,d]=generacija("cutsample.mp4");

@@ -22,26 +22,51 @@
 ## Author: arun <arun@hplaptop>
 ## Created: 2019-01-10
 
-function [retval] = najdi_ujemanja (vrhovi, prvivektor,drugivektor)
-  
-  if(prvivektor{3} == "manjsi" )
-    manjsivektor = prvivektor
-  endif
+function [primerjalni_vektor] = najdi_ujemanja (vrhovi, prvivektor,drugivektor)
+pkg load signal
+pkg load image
+    
+    primerjalni_vektor =[];
+    # nastimamo ker je vecji in ker manjsi
+    if(prvivektor{3} == "manjsi" )
+      manjsivektor = prvivektor;
+      vecjivektor = drugivektor;
+    else
+      manjsivektor = drugivektor;
+      vecjivektor = prvivektor;
+    endif
 
- for i =1:length(vrhovi)
-   
-   
-   
-   
-   
-   
-   
-   
-   
- endfor 
+    # glavni loop
+    for i =1:length(vrhovi)
+      tau = vrhovi(i) - numel(manjsivektor{1}); #96, zamik
+      if(tau > numel(manjsivektor{1} ))
+        break; 
+      endif
  
- endfunction
- 
+        for j = 1:length(manjsivektor{1}) #primerjamo 
+         primerjalni_vektor(j)= mad( vecjivektor{1}(tau+j) , manjsivektor{1}(j) );
+        endfor
+      #pisemo stvari
+      tempsmooth= (imsmooth(primerjalni_vektor, "Gaussian", 30));
+        if(max(tempsmooth) < 1) # da je max razlika manj kot 1, potem je vredu 
+            figure(i);
+            plot(tempsmooth);
+            tau
+            drawnow
+        endif 
+    endfor 
+endfunction
+
+
+
+
+
+
+
+
+
+
+
 # naredit z mad? 
   for i =1:length(vrhovi)
   if vrhovi(i) < 0 

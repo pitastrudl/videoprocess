@@ -11,6 +11,8 @@ function ret =  najdi(a,b)
 %printf(cl)
 [seznam_tau prvivektor drugivektor]  = korelacija(mad_a,mad_b,pot_do_video_posnetka_a,pot_do_video_posnetka_b);
 
+
+
 # sprejme: seznam tauov. 2x direktorij do slik. (spremenit mogoce da bere direkt iz videja. )
 endfunction
 %clear -a

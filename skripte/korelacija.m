@@ -27,7 +27,7 @@ for i = 1:numel(vektor_korelacije)-5
      endif
   endif
 endfor
-prvivektor{1}=1;
-drugivektor{1}=1; 
+%prvivektor{1}=1;
+%drugivektor{1}=1; 
 endfunction
 
