@@ -22,7 +22,7 @@
 ## Author: arun <arun@hplaptop>
 ## Created: 2019-01-10
 
-function [primerjalni_vektor] = najdi_ujemanja (vrhovi, prvivektor,drugivektor)
+function[vsivektorji,zamik] = najdi_ujemanja (vrhovi, prvivektor,drugivektor)
 pkg load signal
 pkg load image
     
@@ -43,15 +43,18 @@ pkg load image
         break; 
       endif
  
-        for j = 1:length(manjsivektor{1}) #primerjamo 
+        for j = 1:length(manjsivektor{1}) #primerjamo, lahk oze tuki gledam od kdaj do kdaj se primerja...?
          primerjalni_vektor(j)= mad( vecjivektor{1}(tau+j) , manjsivektor{1}(j) );
         endfor
       #pisemo stvari
+       #tempsmooth = primerjalni_vektor;
+       vsivektorji{i}=primerjalni_vektor;
       tempsmooth= (imsmooth(primerjalni_vektor, "Gaussian", 30));
         if(max(tempsmooth) < 1) # da je max razlika manj kot 1, potem je vredu 
             figure(i);
+            
             plot(tempsmooth);
-            tau
+            zamik = ta #tukaj povozi druge, ce je več ujemanj
             drawnow
         endif 
     endfor 

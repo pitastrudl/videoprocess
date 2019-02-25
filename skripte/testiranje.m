@@ -17,6 +17,10 @@ pkg load image
 [mad_b, podvzorcene_slike_b, pot_do_video_posnetka_b]= generacija ("cutsample.mp4"); #125
 
 [b seznam prvi drugi]= korelacija(mad_a,mad_b,pot_do_video_posnetka_a,pot_do_video_posnetka_b);
+[vsivektorji,zamik] =najdi_ujemanja(seznam,prvi{1},drugi{1});
+
+primerjanje_slik (video1, video2,zamik)
+
 
 
 

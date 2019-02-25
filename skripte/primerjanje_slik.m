@@ -24,12 +24,16 @@
 
 function primerjanje_slik (video1, video2,zamik)
 
+
 figure(1)
 title("video 1")
 imshow(video1(:,:,1))
 figure(2)
 title("video 2 + zamik")
 imshow(video2(:,:,1+zamik))
+
+
+
 
 
 endfunction
