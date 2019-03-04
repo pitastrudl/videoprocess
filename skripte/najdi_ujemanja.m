@@ -28,7 +28,7 @@ pkg load image
     
     primerjalni_vektor =[];
     # nastimamo ker je vecji in ker manjsi
-    if(prvivektor{3} == "manjsi" )
+    if(prvivektor.vecji == false )
       manjsivektor = prvivektor;
       vecjivektor = drugivektor;
     else
@@ -38,13 +38,15 @@ pkg load image
 
     # glavni loop
     for i =1:length(vrhovi)
-      tau = vrhovi(i) - numel(manjsivektor{1}); #96, zamik
-      if(tau > numel(manjsivektor{1} ))
+      tau = vrhovi(i) - numel(manjsivektor.vektor_sprememb); #96, zamik
+      if(tau > numel(manjsivektor.vektor_sprememb ))
+      "je premajhno"
         break; 
+        
       endif
  
-        for j = 1:length(manjsivektor{1}) #primerjamo, lahk oze tuki gledam od kdaj do kdaj se primerja...?
-         primerjalni_vektor(j)= mad( vecjivektor{1}(tau+j) , manjsivektor{1}(j) );
+        for j = 1:length(manjsivektor.vektor_sprememb) #primerjamo, lahk oze tuki gledam od kdaj do kdaj se primerja...?
+         primerjalni_vektor(j)= mad( vecjivektor.vektor_sprememb(tau+j) , manjsivektor.vektor_sprememb(j) );
         endfor
       #pisemo stvari
        #tempsmooth = primerjalni_vektor;
@@ -54,7 +56,7 @@ pkg load image
             figure(i);
             
             plot(tempsmooth);
-            zamik = ta #tukaj povozi druge, ce je več ujemanj
+            zamik = tau #tukaj povozi druge, ce je več ujemanj
             drawnow
         endif 
     endfor 
