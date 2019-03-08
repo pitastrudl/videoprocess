@@ -27,8 +27,9 @@ pkg load image
 
 #testiranje novega z objektom 
 prvi_videoposnetek = posnetek("sample.mp4")
-drugi_videoposnetek = posnetek("drugisample.mp4")
-
+%drugi_videoposnetek = posnetek("cutsample.mp4")
+%drugi_videoposnetek = posnetek("drugisample.mp4")
+drugi_videoposnetek = posnetek("tretjisample.mp4")
 
 
 [drugi_videoposnetek.vektor_sprememb, drugi_videoposnetek.podvzorcene_slike, drugi_videoposnetek.pot_do_posnetka]= generacija (drugi_videoposnetek.datoteka); #125cutsam
@@ -36,14 +37,22 @@ drugi_videoposnetek = posnetek("drugisample.mp4")
 
 
 [b seznam prvi drugi]= korelacija_v1(drugi_videoposnetek,prvi_videoposnetek);
+
+%v1 = imsmooth(b, "Gaussian", 30); %"Gaussian" filter for octave, used for 1d, although it is a 2d function.
+%v2 = (b-v1)>0.4;
+
 [vsivektorji,zamik] =najdi_ujemanja(seznam,prvi,drugi);
 
 
 primerjanje_slik ( drugi_videoposnetek.podvzorcene_slike,prvi_videoposnetek.podvzorcene_slike,zamik)
 
-primerjanje_slik ( drugi_videoposnetek.podvzorcene_slike,prvi_videoposnetek.podvzorcene_slike,274)
 
-primerjanje_slik(prvi_videoposnetek.podvzorcene_slike,drugi_videoposnetek.podvzorcene_slike,73)
+
+
+
+%primerjanje_slik ( drugi_videoposnetek.podvzorcene_slike,prvi_videoposnetek.podvzorcene_slike,274)
+%
+%primerjanje_slik(prvi_videoposnetek.podvzorcene_slike,drugi_videoposnetek.podvzorcene_slike,73)
 
 
 %imshow(podvzorcene_slike_a(:,:,213))

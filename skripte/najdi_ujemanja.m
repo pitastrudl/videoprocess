@@ -25,9 +25,9 @@
 function[vsivektorji,zamik] = najdi_ujemanja (vrhovi, prvivektor,drugivektor)
 pkg load signal
 pkg load image
-    
-    primerjalni_vektor =[];
-    # nastimamo ker je vecji in ker manjsi
+    zamik = []; #array zamikov
+    primerjalni_vektor =[]; 
+    # nastavimo ker je vecji in ker manjsi
     if(prvivektor.vecji == false )
       manjsivektor = prvivektor;
       vecjivektor = drugivektor;
@@ -38,77 +38,27 @@ pkg load image
 
     # glavni loop
     for i =1:length(vrhovi)
-      tau = vrhovi(i) - numel(manjsivektor.vektor_sprememb); #96, zamik
-      if(tau > numel(manjsivektor.vektor_sprememb ))
-      "je premajhno"
-        break; 
-        
-      endif
+      tau = vrhovi(i) - numel(manjsivektor.vektor_sprememb); 
+     if(tau + length(manjsivektor.vektor_sprememb ) > length(vecjivektor.vektor_sprememb)  )
+     continue # če zamik ne ustreza, preskočimo
+     endif
  
-        for j = 1:length(manjsivektor.vektor_sprememb) #primerjamo, lahk oze tuki gledam od kdaj do kdaj se primerja...?
+ # za določen tau, oziroma zamik, gremo z MAD primerjat, če najdemo zamike.
+        for j = 1:length(manjsivektor.vektor_sprememb) 
          primerjalni_vektor(j)= mad( vecjivektor.vektor_sprememb(tau+j) , manjsivektor.vektor_sprememb(j) );
         endfor
-      #pisemo stvari
-       #tempsmooth = primerjalni_vektor;
+
        vsivektorji{i}=primerjalni_vektor;
+       
       tempsmooth= (imsmooth(primerjalni_vektor, "Gaussian", 30));
-        if(max(tempsmooth) < 1) # da je max razlika manj kot 1, potem je vredu 
+        if(max(tempsmooth) < 1) # naš "threshold", razlika med piksli manj kot 1.
             figure(i);
-            
-            plot(tempsmooth);
-            zamik = tau #tukaj povozi druge, ce je več ujemanj
-            drawnow
+            #plot(tempsmooth);
+            zamik(end+1) = tau;
+
+            #drawnow
         endif 
     endfor 
-endfunction
+    endfunction 
 
-
-
-
-
-
-
-
-
-
-
-# naredit z mad? 
-  for i =1:length(vrhovi)
-  if vrhovi(i) < 0 
-    abstau = abs(vrhovi(i))
     
-        for j=abstau:length(manjsilist)
-          A = (manjsilist(:,:,j));
-          B=  (vecjilist(:,:,j-abstau+1));
-          imgdiff = imabsdiff( A, B );  
-          
-          if sum(sum(imgdiff)) == 0  #se lahko zgodi tudi samo ce sta mogoce bela obadva. 
-            imgdiff
-            j
-            foundtau= vrhovi(i);
-            break 
-          endif
-          
-        endfor
-        
-      else #-------------------------
-      
-         for j=1:length(manjsilist)
-             if j+vrhovi(i) > length(vecjilist)
-               break
-             end
-            A = (manjsilist(:,:,j)) ; #+1 da ni out of bounds
-            B=  (vecjilist(:,:,j+vrhovi(i))); 
-            imgdiff = imabsdiff( A, B );  
-             if sum(sum(imgdiff)) == 0  #se lahko zgodi tudi samo ce sta mogoce bela obadva. 
-              imgdiff
-              j
-              foundtau= vrhovi(i);
-              break 
-            end
-          endfor
-        endif
-endfor
-  
-
-

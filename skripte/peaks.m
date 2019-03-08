@@ -16,7 +16,6 @@ figure(2); plot(c1);
 
 
 c2 = (c0-c1)>0.4;
-
 figure(3); plot(c2);
 
 
