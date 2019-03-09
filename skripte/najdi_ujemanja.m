@@ -51,12 +51,8 @@ pkg load image
        vsivektorji{i}=primerjalni_vektor;
        
       tempsmooth= (imsmooth(primerjalni_vektor, "Gaussian", 30));
-        if(max(tempsmooth) < 1) # naš "threshold", razlika med piksli manj kot 1.
-            figure(i);
-            #plot(tempsmooth);
+        if(max(tempsmooth) < 0.5) # naš "threshold", razlika med piksli manj kot 1, potem je neka korelacija. 
             zamik(end+1) = tau;
-
-            #drawnow
         endif 
     endfor 
     endfunction 

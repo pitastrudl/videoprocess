@@ -29,7 +29,8 @@ pkg load image
 prvi_videoposnetek = posnetek("sample.mp4")
 %drugi_videoposnetek = posnetek("cutsample.mp4")
 %drugi_videoposnetek = posnetek("drugisample.mp4")
-drugi_videoposnetek = posnetek("tretjisample.mp4")
+%drugi_videoposnetek = posnetek("tretjisample.mp4")
+drugi_videoposnetek = posnetek("kratek.mp4")
 
 
 [drugi_videoposnetek.vektor_sprememb, drugi_videoposnetek.podvzorcene_slike, drugi_videoposnetek.pot_do_posnetka]= generacija (drugi_videoposnetek.datoteka); #125cutsam

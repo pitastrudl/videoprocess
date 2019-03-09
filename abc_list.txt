@@ -1,3 +1,0 @@
-file 'prvi.mp4'
-file 'drugi.mp4'
-file 'tretji.mp4'
