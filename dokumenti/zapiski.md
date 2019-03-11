@@ -16,6 +16,13 @@
   - Segmenti
 - če hočem angleško al zamenam mentorja al pa notar
 - lslistninge treba dodat oznake figur...da se lahko referenciras na njih.
+- /absolute/file/path.md
+  relative/to/the/command/root.md
+  #do/not/include/this.md
+
+```{.octave include=/home/arun/videoprocess/skripte/korelacija.m}
+
+```
 
 ## Vprasanja
 
@@ -108,8 +115,8 @@ Za razlike uporablamo lahko MAD. Lahko obe omenimo v **pregledu** in eno uporabi
 - priprava okolja ni tolk pomembna. samo navedba paketov kako se uporablja.
 - Namesto konkateniranja uporabit zdruzevanje. Cim bolj slovenske izraze. 
 - Za podvzorcenost pokazem da ni razlike ce podvzorcim 4:3 na 16:9 format ali pa 16:9, na istem videju 16:9. 
-- ~~%[dd asd] = system("ls -a | grep jpeg |  sort -V")~~
-  - ~~%strsplit(asd(1:end-1),"\n")  branje filenamov, in pol dat v cel array imena, kr uporabno.~~  
+- -----%[dd asd] = system("ls -a | grep jpeg |  sort -V")
+  - ----%strsplit(asd(1:end-1),"\\n")  branje filenamov, in pol dat v cel array imena, kr uporabno.--
 - PASSAT IME VIDEJEV DO KONCA, DA SE VE KATERI JE KATERI.
 
 ### Zapiski novi sestanek november
@@ -214,7 +221,7 @@ mean `m`and the standard deviation `sigma``
 
 ### Drugo
 
-Nato uporabimo Gaussovo konvolucijo s katero "zameglimo" sliko oziroma zgladimo visoke frekvence (katere bi mogoče preveč vplivale na MSE?). Gaussov filter je "low pass" filter, ki zgladi sliko, objekti nimajo več ostrih robov. Z velikostjo standardne deviacije v gaussovem filtru lahko kontroliramo, kako močno izločamo detajle. Večje glajenje pomeni da imamo tudi nižje frekvence.  Kot na slikah z konvolucijo, lahko vidimo rezultat na frekvencah pojavitev pikslov.  Gaussova konvolucija nam "zgladi/zamegli" sliko s katero odstranimo ostre prehode med območji v sliki. Potem naš histogram te slike tudi izgleda bolj umirjen brez velikih in ostrih prehodov. 
+Nato uporabimo Gaussovo konvolucijo s katero "zameglimo" sliko oziroma zgladimo visoke frekvence (katere bi mogoče preveč vplivale na MSE?). Gaussov filter je "low pass" filter, ki zgladi sliko, objekti nimajo več ostrih robov. Z velikostjo standardne deviacije v gaussovem filtru lahko kontroliramo, kako močno izločamo detajle. Večje glajenje pomeni da imamo tudi nižje frekvence.  Kot na slikah z konvolucijo, lahko vidimo rezultat na frekvencah pojavitev pikslov.  Gaussova konvolucija nam "zgladi/zamegli" sliko s katero odstranimo ostre prehode med območji v sliki. Potem naš histogram te slike tudi izgleda bolj umirjen brez velikih in ostrih prehodov.
 
 Tukaj lahko še povemo o efektivni implementaciji gaussovem filtru, ker naj bi bile matrike razdeljive, lahko prvo naredimo horizontalno in potem navpično, kar nam prihrani na številu operacij. vir
 
@@ -390,4 +397,3 @@ ločljviost
 enga smo podvzorčl, recimo ta kodek z podvzorcenjem ni delu? seprav en priemr za locljivost, neki tam 100 npr in da se vendno dela...
 
 ## Zakljucek in nadalnje delo
-
