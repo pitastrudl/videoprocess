@@ -1,0 +1,19 @@
+ffmpeg -i famnit_hitripremik.mp4 -frames 1 -vf "select,tile=1x$numframe,scale=iw/1000:ih/1000" image.png
+ numframe=$(ffmpeg -i famnit_hitripremik.mp4 -map 0:v:0 -c copy -f null - 2>&1 | awk '/frame=/ {print $2}')
+
+
+ffmpeg -i famnit_hitripremik.mp4 -frames 1 -vf "select=not(mod(n\,10)),tile=$numframe/10x1,scale=iw/10:ih*10" image.jpg
+
+
+ffmpeg -i famnit_hitripremik.mp4 -frames 1 -vf ",scale=iw/40:ih,select=not(mod(n\,5)),tile=180x1" image.png
+
+
+
+dela
+ffmpeg -i famnit_hitripremik.mp4 -frames 1 -vf "scale=iw/40:ih,select=not(mod(n\,5)),tile=180x1" image.png
+
+z ffprobe  ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames -of default=noke│~                                                                                                                                      
+y=1:noprint_wrappers=1 famnit_hitripremik.mp4
+
+
+ffmpeg -i famnit_hitripremik.mp4 -frames 1 -vf "scale=iw/40:ih,select=not(mod(n\,5)),tile=180x1" image.png

@@ -1,0 +1,17 @@
+potem se dat izrezke skupaj v en drug video, in primerjat. izrezke mogoce skup dat
+pa pol primerjat z enim izrezkok. 
+
+	Vbistvu bi lahko potem naredil program ki bi to delal vse ksupaj avtomatkso da nebi shranjeval vemsnih rezultatov?. 
+
+
+
+$ cat mylist.txt
+file '/path/to/file1'
+file '/path/to/file2'
+file '/path/to/file3'
+
+$ ffmpeg -f concat -i mylist.txt -c copy output
+
+
+ numframe=$(ffmpeg -i famnit_hitripremik.mp4 -map 0:v:0 -c copy -f null - 2>&1 | awk '/frame=/ {print $2}') && ffmpeg -i famnit_hitripremik.mp4 -frames 1 -vf "select,tile=$numframe,scale=iw/10:ih*10" image.jpg
+
