@@ -5,6 +5,7 @@
 *.png
 *.bmp
 *.zip
+pandoc-include-code
 octave-workspace
 
 skripte/octave-workspace
