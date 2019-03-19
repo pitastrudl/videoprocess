@@ -6,7 +6,7 @@ function [video_struct]= generacija (video_posnetek)
   video_struct = posnetek(video_posnetek);
   
   pot_do_posnetka = strcat(pwd,"/",video_posnetek);
-  captureObjekt = cv.VideocaptureObjektture(video_posnetek);
+  captureObjekt = cv.VideoCapture(video_posnetek);
   podvzorcene_slike = zeros(54 ,96,captureObjekt.FrameCount); #3D matrika init 
 
   #beremo video

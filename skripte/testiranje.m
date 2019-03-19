@@ -3,7 +3,7 @@ pkg load image
 
 
 prvi_videoposnetek = generacija("sample.mp4");
-drugi_videoposnetek = generacija("cutsample.mp4");
+drugi_videoposnetek = generacija("drugisample.mp4");
 %drugi_videoposnetek = generacija("drugisample.mp4");
 %drugi_videoposnetek = generacija("tretjisample.mp4");
 %drugi_videoposnetek = generacija("kratek.mp4");
@@ -14,9 +14,5 @@ drugi_videoposnetek = generacija("cutsample.mp4");
 
 [vsivektorji,zamik] =najdi_ujemanja(seznam,prvi,drugi);
 
-
-%primerjanje_slik ( drugi_videoposnetek.podvzorcene_slike,prvi_videoposnetek.podvzorcene_slike,zamik)
-
-
-
-
+# sample pa drugisample.mp4 dela, ker vrne samo eden. bi blo treba for loop naredit, TODO
+primerjanje_slik (drugi_videoposnetek,prvi_videoposnetek,zamik)

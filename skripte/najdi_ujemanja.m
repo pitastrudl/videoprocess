@@ -32,4 +32,3 @@ function[vsivektorji,zamik] = najdi_ujemanja (vrhovi, prvivektor,drugivektor)
     endif 
   endfor 
 endfunction
- 
