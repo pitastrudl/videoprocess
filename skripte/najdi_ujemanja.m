@@ -1,7 +1,7 @@
 function[vsivektorji,zamik] = najdi_ujemanja (vrhovi, prvivektor,drugivektor)
   pkg load signal
   pkg load image
-
+# da samo gledam ker je priv in ker je drugi??
   zamik = []; 
   primerjalni_vektor =[]; 
   # nastavimo ker je vecji in ker manjsi

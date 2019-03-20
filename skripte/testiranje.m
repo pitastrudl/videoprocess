@@ -16,3 +16,5 @@ drugi_videoposnetek = generacija("drugisample.mp4");
 
 # sample pa drugisample.mp4 dela, ker vrne samo eden. bi blo treba for loop naredit, TODO
 primerjanje_slik (drugi_videoposnetek,prvi_videoposnetek,zamik)
+
+
