@@ -9,7 +9,7 @@ drugi_videoposnetek = generacija("drugisample.mp4");
 %drugi_videoposnetek = generacija("kratek.mp4");
 
 
-[b seznam prvi drugi]= korelacija(drugi_videoposnetek,prvi_videoposnetek);
+[b seznam prvi drugi]= korelacija(drugi_videoposnetek,prvi_videoposnetek,1);
 
 
 [vsivektorji,zamik] =najdi_ujemanja(seznam,prvi,drugi);
