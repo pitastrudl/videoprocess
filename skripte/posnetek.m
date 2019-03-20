@@ -4,7 +4,7 @@ function pos = posnetek(video)
     pos.podvzorcene_slike = 0;
     pos.dolzina = 0;
     pos.polozaj_v_normxcorr = "";
-    pos.vecji = true;
+    pos.prvi = true;
     pos.pot_do_posnetka= "";
 endfunction
 

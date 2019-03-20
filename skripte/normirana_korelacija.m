@@ -1,16 +1,20 @@
-function [korelacija_rezultat manjsi vecji] = normirana_korelacija(A,B)
+function [korelacija_rezultat prvi drugi] = normirana_korelacija(A,B)
 
 #obracamo
 if length(A.vektor_sprememb) >= length(B.vektor_sprememb)
-vecji = A;
-manjsi = B;
+drugi = A;
+prvi = B;
 else
-manjsi = A;
-vecji = B;
+prvi = A;
+drugi = B;
 endif
 
 #oznacimo in damo v korelacijo
-manjsi.vecji=false;
-vecji.vecji=true;
-korelacija_rezultat = normxcorr2 (manjsi.vektor_sprememb,vecji.vektor_sprememb);
+prvi.prvi=true;
+drugi.prvi=false;
+
+korelacija_rezultat = normxcorr2 (prvi.vektor_sprememb,drugi.vektor_sprememb);
+
+#pošljemo nazaj v pravem zaporedju
 end 
+
