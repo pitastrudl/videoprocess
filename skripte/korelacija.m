@@ -24,3 +24,4 @@ seznam_tau = find(a>meja);
      seznam_tau = 0;
   endif
 endfunction
+

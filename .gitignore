@@ -5,6 +5,7 @@
 *.png
 *.bmp
 *.zip
+*.mat
 pandoc-include-code
 octave-workspace
 

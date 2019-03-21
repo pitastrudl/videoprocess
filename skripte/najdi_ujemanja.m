@@ -35,17 +35,19 @@ endif
 %      continue # če zamik ne ustreza, preskočimo
 %    endif 
     
-    # za določen tau, oziroma zamik, gremo z MAD primerjat, če najdemo zamike.
-    zacetek_prvi=max(1,-1*tau)
-    konec_prvi=min(length(prvivektor.vektor_sprememb),length(drugivektor.vektor_sprememb-tau))
-    zacetek_drugi=max(tau,1)
+    # za določen tau, oziroma zam
+    #gremo z MAD primerjat, če najdemo zamike.
+    tau
+    zacetek_prvi=max(0,-1*tau)+1  # zakaj to d ela???
+    konec_prvi=min(length(prvivektor.vektor_sprememb),length(drugivektor.vektor_sprememb)-tau)
+    zacetek_drugi=max(tau,0)+1
     konec_drugi = min(tau+length(prvivektor.vektor_sprememb),length(drugivektor.vektor_sprememb) ) # to bo treba spreminjat , v primeru da se ne ujema vse?
 
     
     
   aaaa="";
     for j = zacetek_prvi:konec_prvi
-      primerjalni_vektor(end+1)= mad(prvivektor.vektor_sprememb(zacetek_prvi) , drugivektor.vektor_sprememb(zacetek_drugi) );
+      primerjalni_vektor(end+1)= mad(prvivektor.podvzorcene_slike(:,:,j) , drugivektor.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi));
     endfor
   
 %    for j = zacetek_drugi:konec_drugi
@@ -57,7 +59,7 @@ endif
 %tempsmooth= (imsmooth(primerjalni_vektor, "Gaussian", 30));
 
     #tole dela če je v celoti enak...
-    if(max(primerjalni_vektor)< treshold) # naš "threshold", razlika med piksli manj kot 1, potem je neka korelacija. 
+    if(max(primerjalni_vektor)< treshold) # naš "threshold", razlika med piksli manj kot 1, potem je neka korelacija. ,
       zamik(end+1) = tau;
     endif 
     printf("-------------endfor---------------------- \n")

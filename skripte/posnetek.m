@@ -6,6 +6,7 @@ function pos = posnetek(video)
     pos.polozaj_v_normxcorr = "";
     pos.prvi = true;
     pos.pot_do_posnetka= "";
+
 endfunction
 
 
