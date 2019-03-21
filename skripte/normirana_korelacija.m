@@ -1,5 +1,5 @@
 function [korelacija_rezultat prvi drugi] = normirana_korelacija(A,B)
-
+pkg load image
 #obracamo
 if length(A.vektor_sprememb) >= length(B.vektor_sprememb)
 drugi = A;
