@@ -6,7 +6,8 @@ function pos = posnetek(video)
     pos.polozaj_v_normxcorr = "";
     pos.prvi = true;
     pos.pot_do_posnetka= "";
-
+    pos.dolzinaslik = size(podvzorcene_slike,3)
+    pos.dolzinasprememb = numel(vektor_sprememb)
 endfunction
 
 

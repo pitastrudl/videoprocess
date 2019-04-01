@@ -34,6 +34,7 @@ function [video_struct]= generacija (video_posnetek)
   end
   podvzorcene_slike=uint8(podvzorcene_slike); # spreminjamo v pravi zapis, drugače imshow ne deluje (shranjuje kot double)
   
+  
   video_struct.pot_do_posnetka = pot_do_posnetka;
   video_struct.podvzorcene_slike = podvzorcene_slike;
   video_struct.vektor_sprememb = vektor_sprememb;

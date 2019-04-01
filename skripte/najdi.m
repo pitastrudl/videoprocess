@@ -11,3 +11,4 @@ drugi_videoposnetek = generacija(b);
 #iskanje moznih zamikov
 [vsivektorji,zamik] =najdi_ujemanja(seznam,prvi,drugi);
 endfunction
+
