@@ -49,10 +49,12 @@ endif
 
     vsivektorji{i}=primerjalni_vektor; # hranimo, samo ker smo radovedni
 
-%tempsmooth= (imsmooth(primerjalni_vektor, "Gaussian", 30));
-
-    #tole dela če je v celoti enak...
-    if(max(primerjalni_vektor)< treshold) # naš "threshold", razlika med piksli manj kot 1, potem je neka korelacija. 
+    #tole dela če je v celoti enak.....
+%    if(max(primerjalni_vektor)< treshold) # naš "threshold", razlika med piksli manj kot 1, potem je neka korelacija. 
+%      zamik(end+1) = tau;
+%    endif 
+    
+    if(numel(find(primerjalni_vektor < treshold)) > 25 ) # gledamo da je ujemanj vsaj za eno sekundo....
       zamik(end+1) = tau;
     endif 
     printf("-------------endfor---------------------- \n")

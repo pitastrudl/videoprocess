@@ -2,45 +2,25 @@ pkg load video
 pkg load image
 
 
-%prvi_videoposnetek = generacija("sample.mp4");
-%drugi_videoposnetek = generacija("drugisample.mp4");
-%drugi_videoposnetek = generacija("drugisample.mp4");
-%drugi_videoposnetek = generacija("tretjisample.mp4");
-%drugi_videoposnetek = generacija("kratek.mp4");
 
-%%prvi_videoposnetek = generacija("ab.mp4");
-%%drugi_videoposnetek = generacija("c.mp4");
-%%save("-mat-binary","ab","prvi_videoposnetek")
-%%save("-mat-binary","c","drugi_videoposnetek")
-%
+dva_ujemanja = load("dva_ujemanja"); prvi_videoposnetek=dva_ujemanja.prvi_videoposnetek;clear dva_ujemanja
+t = load("t"); drugi_videoposnetek=t.drugi_videoposnetek;clear t
+
 %ab = load("ab"); prvi_videoposnetek=ab.prvi_videoposnetek;clear ab
 %c = load("c"); drugi_videoposnetek=c.drugi_videoposnetek;clear c
 
-
-%%prvi_videoposnetek = generacija("df.mp4");
-%%drugi_videoposnetek = generacija("g.mp4");
-%%save("-mat-binary","df","prvi_videoposnetek")
-%%save("-mat-binary","g","drugi_videoposnetek")
-
-df = load("df"); prvi_videoposnetek=df.prvi_videoposnetek;clear df
-g = load("g"); drugi_videoposnetek=g.drugi_videoposnetek;clear g
-
-
-%prvi_videoposnetek = generacija("xy.mp4");
-%drugi_videoposnetek = generacija("z.mp4");
-%%save("-mat-binary","xy","prvi_videoposnetek")
-%%save("-mat-binary","z","drugi_videoposnetek")
+%df = load("df"); prvi_videoposnetek=df.prvi_videoposnetek;clear df
+%g = load("g"); drugi_videoposnetek=g.drugi_videoposnetek;clear g
 
 %xy = load("xy"); prvi_videoposnetek=xy.prvi_videoposnetek;clear xy
 %z = load("z"); drugi_videoposnetek=z.drugi_videoposnetek;clear z
 
-
 [b seznam prvi drugi]= korelacija(drugi_videoposnetek,prvi_videoposnetek);
 
 
-[vsivektorji,zamik] =najdi_ujemanja(seznam,prvi,drugi,3);
+[vsivektorji,zamik] =najdi_ujemanja(seznam,prvi,drugi,5);
 %plot(vsivektorji{2})
-[vektor newimg indexvtor] = primerjanje_slik (prvi, drugi,vsivektorji{2},seznam(2),0.5)
+[vektor_razlik newimg indexvektor] = primerjanje_slik (prvi, drugi,vsivektorji{1,1},seznam(1),5)
 
 
 tau= zamik - length(prvi.vektor_sprememb);
@@ -96,3 +76,44 @@ drawnow();
 %primerjanje_slik (drugi_videoposnetek,prvi_videoposnetek,zamik)
 %
 
+
+#--------------S IN T testiranje
+#za s
+%rezanje("big.mp4",5,5,"s1.mp4")
+%rezanje("big.mp4",15,5,"s2.mp4")
+%rezanje("big.mp4",25,5,"s3.mp4")
+%rezanje("big.mp4",40,30,"t.mp4")
+%rezanje("big.mp4",40,5,"t1.mp4")
+%rezanje("big.mp4",50,5,"t2.mp4")
+%
+%lepljenje({"s1.mp4";"t1.mp4";"s2.mp4";"t2.mp4";"s3.mp4"},"dva_ujemanja.mp4")
+%prvi_videoposnetek = generacija("dva_ujemanja.mp4");
+%drugi_videoposnetek = generacija("t.mp4");
+%save("-mat-binary","dva_ujemanja","prvi_videoposnetek")
+%save("-mat-binary","t","drugi_videoposnetek")
+
+
+%prvi_videoposnetek = generacija("sample.mp4");
+%drugi_videoposnetek = generacija("drugisample.mp4");
+%drugi_videoposnetek = generacija("drugisample.mp4");
+%drugi_videoposnetek = generacija("tretjisample.mp4");
+%drugi_videoposnetek = generacija("kratek.mp4");
+
+%%prvi_videoposnetek = generacija("ab.mp4");
+%%drugi_videoposnetek = generacija("c.mp4");
+%%save("-mat-binary","ab","prvi_videoposnetek")
+%%save("-mat-binary","c","drugi_videoposnetek")
+%
+
+
+
+%%prvi_videoposnetek = generacija("df.mp4");
+%%drugi_videoposnetek = generacija("g.mp4");
+%%save("-mat-binary","df","prvi_videoposnetek")
+%%save("-mat-binary","g","drugi_videoposnetek")
+
+
+%prvi_videoposnetek = generacija("xy.mp4");
+%drugi_videoposnetek = generacija("z.mp4");
+%%save("-mat-binary","xy","prvi_videoposnetek")
+%%save("-mat-binary","z","drugi_videoposnetek")

@@ -1,7 +1,14 @@
 
-function lepljenje (video1,video2,outputfajl)
-system(["ffmpeg -i" ' ' video1 ' ' "-c copy -bsf:v h264_mp4toannexb -f mpegts intermediate1.ts"])
-system(["ffmpeg -i" ' ' video2 ' ' "-c copy -bsf:v h264_mp4toannexb -f mpegts intermediate2.ts"])
-system(["ffmpeg -i" ' ' "\"concat:intermediate1.ts|intermediate2.ts\" -c copy -bsf:a aac_adtstoasc" ' ' outputfajl ]) 
+function lepljenje (video_posnetki,outputfajl)
+for i=1:numel(video_posnetki)
+  video_posnetki{i}
+  tempstr=strcat("echo \"file '",video_posnetki{i},"'\""," >> mylist.txt")
+  system([tempstr]) 
+endfor
+
+system(["ffmpeg -f concat -i mylist.txt -c copy" ' ' outputfajl ]) 
+
+system("> mylist.txt") 
+outputfajl
 endfunction
 
