@@ -111,28 +111,25 @@ for i=1:size(newImg,3)
 %  drawnow();
 %subplot(1,2,1);imshow(prvi.podvzorcene_slike(:,:,126));title("test");subplot(1,2,2);imshow(drugi.podvzorcene_slike(:,:,1));
   pause(0.04)
+%  print -append "animation/animation.pdf"
+  
+  fname = sprintf ("animation/img%03i.png", i);
+  print ("-dpng", "-r100", fname)
 endfor
-
-#---opencv try
-%posnetk = cv.VideoWriter('peaks.avi',[192,54]);
-%%posnetk.open(posnetk,[96,54]);
-%for i=1:size(newImg,3)
-%  h = image(newImg(:,:,i));
-%  posnetk.write(h);
-%endfor
-%
-%posnetk.release();
+%im = imread ("animation/animation.pdf", "Index", "all");
+%imwrite (im, "animation/animation.gif", "DelayTime", 0.37)
 
 
 #---video package
-%v = avifile('anim.mp4','fps',25.0,'codec','mpeg4')
-%for i=1:size(newImg,3)
-%  
-%  
-%  tempimg= im2double(uint8(newImg(:,:,i)));
-%  addframe(v,tempimg);
-%endfor
-
+v = avifile('animation/anim.mp4','fps',25.0,'codec','mpeg4')
+for i=1:size(newImg,3)
+  i
+  tempstring=sprintf("animation/img%03i.png", i);
+ tempimg=imread(tempstring);
+  #tempimg= im2double(uint8(newImg(:,:,i)));
+  tempadd = im2double(tempimg);
+  addframe(v,tempadd);
+endfor
 
 #---drugi posks 
 %video = VideoWriter('yourvideo.avi'); %create the video object
@@ -178,23 +175,7 @@ endfor
 %imshow(drugi.podvzorcene_slike(:,:,index2))
 %drawnow(); 
 
-#----------------???
-%% create blank image
-%h = imagesc(uint8(prvi.podvzorcene_slike(:,:,1)));
-%%% for loop to play "movie"
-%for i = 1:size(prvi.podvzorcene_slike,3)
-%  set(h, 'cdata', uint8(prvi.podvzorcene_slike(:,:,i))) % update latest frame
-%  pause(0.04) % feel free to reduce, but keep greater than 0 to ensure redraw
-%end
 
-
-
-
-
-%% create data, 25 frames of 512x512 pixels
-
-
-  
   
 
 endfunction

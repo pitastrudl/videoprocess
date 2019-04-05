@@ -45,18 +45,19 @@ endif
   
 %    for j = zacetek_drugi:konec_drugi
 %      primerjalni_vektor(j)= mad(prvivektor.vektor_sprememb(zacetek_prvi) , drugivektor.vektor_sprememb(konec_drugi) );
-%    endfor
+%    en
 
     vsivektorji{i}=primerjalni_vektor; # hranimo, samo ker smo radovedni
 
 %tempsmooth= (imsmooth(primerjalni_vektor, "Gaussian", 30));
 
     #tole dela če je v celoti enak...
-    if(max(primerjalni_vektor)< treshold) # naš "threshold", razlika med piksli manj kot 1, potem je neka korelacija. ,
+    if(max(primerjalni_vektor)< treshold) # naš "threshold", razlika med piksli manj kot 1, potem je neka korelacija. 
       zamik(end+1) = tau;
     endif 
     printf("-------------endfor---------------------- \n")
   endfor 
 endfunction
+
 
 
