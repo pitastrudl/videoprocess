@@ -10,16 +10,6 @@ endif
 # da samo gledam ker je priv in ker je drugi??
  
 
-%----zakoemntiral ker dobimo v pravem zaproedju.....
-% # nastavimo ker je vecji in ker manjsi
-%  if(prvivektor.prvi == false )
-%    prvivektor = prvivektor;
-%    drugivektor = drugivektor;
-%  else
-%    prvivektor = drugivektor;
-%    drugivektor = prvivektor;
-%  endif
-
   # glavni loop
   zamik = []; 
   for i =1:length(seznam_zamikov)
@@ -34,8 +24,8 @@ endif
     dolzinaprvi= numel(prvivektor.vektor_sprememb);
     dolzinadrugi=numel(drugivektor.vektor_sprememb);
     zacetek_prvi=max(0,-1*tau)+1  # zakaj to d ela???
-    konec_prvi=min(length(prvivektor.vektor_sprememb),length(drugivektor.vektor_sprememb)-tau);
-    zacetek_drugi=max(tau,0)+1 ;
+    konec_prvi=min(length(prvivektor.vektor_sprememb),length(drugivektor.vektor_sprememb)-tau)
+    zacetek_drugi=max(tau,0)+1 
     konec_drugi = min(tau+length(prvivektor.vektor_sprememb),length(drugivektor.vektor_sprememb) ) # to bo treba spreminjat , v primeru da se ne ujema vse? ;
 
   aaaa="";

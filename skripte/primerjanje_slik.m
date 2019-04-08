@@ -25,7 +25,7 @@ indexvektor= [];
     
     
     newImg(:,:,end +1) = imresize([ prvi.podvzorcene_slike(:,:,j) drugi.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi)] ,1);
-    vektor_razlik = find(vektor < treshold); #notri dobimo indekse kjer je treshold vredu!
+%    vektor_razlik = find(vektor < treshold); #notri dobimo indekse kjer je treshold vredu!
   endif
 i++;
 endfor
@@ -36,7 +36,7 @@ crna_slika(1:size(newImg,1),1:size(newImg,2))=1;
 j=1;
 for i=1:length(indexvektor)  #tukaj naredit, z vektor_razlik, ko bo kazu in ne. 
   colormap("gray");
-  figure(1, "visible", "off"); 
+  f=figure(1, "visible", "off"); 
   subplot(2,1,1)
   if(indexvektor(i)) #če je true
     imagesc(newImg(:,:,j));
@@ -60,16 +60,16 @@ for i=1:length(indexvektor)  #tukaj naredit, z vektor_razlik, ko bo kazu in ne.
 %  drawnow();
 %subplot(1,2,1);imshow(prvi.podvzorcene_slike(:,:,126));title("test");subplot(1,2,2);imshow(drugi.podvzorcene_slike(:,:,1));
   pause(0.04)
-%  print -append "animation/animation.pdf"
+  #print -append "animation/animation.pdf"
   fname = sprintf ("animation/img%03i.png", i);
-%  f = figure;
-%  set(f, "visible", "off");
-%  print ("-dpng", "-r100", fname);
-%   set(f, "visible", "on");
+ 
+  set(f, "visible", "off");
+  print ("-dpng", "-r100", fname);
+   set(f, "visible", "on");
 endfor
 
 #---video package
-v = avifile(['animation/anim' '' int2str(zamik(i)) '' '.mp4'],'fps',25.0,'codec','mpeg4');
+v = avifile(['animation/anim' '' int2str(zamik) '' '.mp4'],'fps',25.0,'codec','mpeg4');
 for i=1:length(indexvektor)
   tempstring=sprintf("animation/img%03i.png", i);
   tempimg=imread(tempstring);
