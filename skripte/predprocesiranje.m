@@ -4,7 +4,7 @@ function [video_struct]= predprocesiranje (video_posnetek)
   
   #kreiramo objekt
   video_struct = posnetek(video_posnetek);
-  
+ 
   pot_do_posnetka = strcat(pwd,"/",video_posnetek);
   captureObjekt = cv.VideoCapture(video_posnetek);
   podvzorcene_slike = zeros(54 ,96,captureObjekt.FrameCount); #3D matrika init 

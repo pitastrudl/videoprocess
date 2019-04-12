@@ -8,11 +8,9 @@ else
 prvi = A;
 drugi = B;
 endif
-
 #oznacimo in damo v korelacijo
 prvi.prvi=true;
 drugi.prvi=false;
-
 korelacija_rezultat = normxcorr2 (prvi.vektor_sprememb,drugi.vektor_sprememb);
 
 #pošljemo nazaj v pravem zaporedju

@@ -1,22 +1,24 @@
 pkg load video 
 pkg load image
 
-pos1 = predprocesiranje("a.mp4");
-pos2 = predprocesiranje("a.mp4");
-[b seznam prvi drugi]= korelacija(pos1,pos2,0.5);
+%pos1 = predprocesiranje("a.mp4");
+%pos2 = predprocesiranje("a.mp4");
+%[b seznam prvi drugi]= korelacija(pos1,pos2,0.5);
 
 %rezanje("big.mp4",15,15,"A.mp4")
 %rezanje("big.mp4",5,35,"B.mp4")
-%prvi_videoposnetek = predprocesiranje("A.mp4");
-%drugi_videoposnetek = predprocesiranje("B.mp4");
+%prvi_videoposnetek = predprocesiranje("q.mp4");
+%drugi_videoposnetek = predprocesiranje("pr.mp4");
+%prvi_videoposnetek.hash = hash("md5","q.mp4");
+%drugi_videoposnetek.hash = hash("md5","pr.mp4");
 %save("-mat-binary","A","prvi_videoposnetek")
 %save("-mat-binary","B","drugi_videoposnetek")
 A = load("A"); prvi_videoposnetek=A.prvi_videoposnetek;clear A
 B = load("B"); drugi_videoposnetek=B.drugi_videoposnetek;clear B
 
 
-%q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
-%pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
+q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
+pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
 
 
 %dva_ujemanja = load("dva_ujemanja"); prvi_videoposnetek=dva_ujemanja.prvi_videoposnetek;clear dva_ujemanja
@@ -34,9 +36,14 @@ B = load("B"); drugi_videoposnetek=B.drugi_videoposnetek;clear B
 [b seznam prvi drugi]= korelacija(drugi_videoposnetek,prvi_videoposnetek,0.5);
 
 
-[vsivektorji,zamik] =najdi_ujemanja(seznam,prvi,drugi,5);
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,1,1);
+
+#---testiranje rezultata
+
+
+
 %plot(vsivektorji{2})
-[vektor_razlik newimg indexvektor] = primerjanje_slik (prvi, drugi,vsivektorji{1,1},seznam(1),5)
+[vektor_razlik newimg indexvektor] = primerjanje_slik (prvi, drugi,vsivektorji{1,1},seznam(1),1)
 
 tau= zamik - length(prvi.vektor_sprememb);
 zacetek_prvi=max(1,-1*tau-1)  # zakaj to d ela???
@@ -72,7 +79,26 @@ figure("visible","off"); movie("init","square.mp4")
  for i=1:n; imshow(shift(a,i)); movie("add","square.mp4"); endfor
  movie("close","square.mp4",24); close; system("mplayer square.mp4")
 
-#--------plottanje pa to
+ #------plotting obeh madjev
+ f=figure(1);
+
+hold on
+  h=title("Prvi video posnetek");
+ set (h, "fontsize", 15);
+ xlabel("Jakost razlike","fontsize",14);
+ ylabel("Indeks razlik med sličicami","fontsize",14);
+plot(prvi.vektor_sprememb)
+%subplot (2, 1, 2)
+%plot(drugi.vektor_sprememb)
+%  h=title("Drugi video posnetek");
+%  set (h, "fontsize", 15);
+% xlabel("Jakost razlike","fontsize",14);
+% ylabel("Indeks razlik med sličicami","fontsize",14);
+% hold off
+  saveas (f, "/home/arun/latex/diploma_rework/slike/madobeh.png", "png")
+
+ 
+#--------plottanje korelacije
 graphics_toolkit ("qt")
 f=figure(1);
 plot(b);
@@ -80,7 +106,7 @@ xlabel("Zamiki krizne korelacije","fontsize",20);
 ylabel("Vrednost krizne korelacije","fontsize",20);
 set(gca, "fontsize", 12)
  line ([0 numel(b)], [0.5 0.5], "linestyle", "--", "color", "b");
- text(200,0.55,"Meja","fontsize",12)
+ text(200,0.55,"Prag","fontsize",12)
  hold on;
  plot(624,0.6,'*','color','r'); #znak 
  text(628,0.6,"624","fontsize",10)
@@ -88,32 +114,60 @@ set(gca, "fontsize", 12)
  saveas (f, "/home/arun/latex/diploma_rework/slike/korelacija.png", "png")
 %print(f,"/home/arun/latex/diploma_rework/slike/korelacija.png", "-dpng")
 
-#--- glavni plot test
+
+#--------plottanje vektorja ujemanja
+graphics_toolkit ("qt")
+f=figure(1);
+plot(vekt);
+treshold = 1;
+xlabel("Razlika med podvzorčenimi sličicami","fontsize",20);
+ylabel("Indeks razlik med sličicami","fontsize",20);
+set(gca, "fontsize", 12)
+line ([0 numel(vekt)], [treshold treshold], "linestyle", "--", "color", "b");
+text(100,treshold + 0.05,"Prag","fontsize",12)
+hold on;
+% plot(624,0.6,'*','color','r'); #znak 
+% text(628,0.6,"624","fontsize",10)
+ hold off;
+ saveas (f, "/home/arun/latex/diploma_rework/slike/obseg_ujemanj.png", "png")
+%print(f,"/home/arun/latex/diploma_rework/slike/korelacija.png", "-dpng")
+
+
+#--- glavni plot test, za poglavje prikaz rezultatov
 figure(1);
 crna_slika(1:100,1:100)=1;
 crna_slika1(1:100,1:100)=1;
 crna_slika2(1:100,1:100)=1;
-  colormap("gray");
+colormap("gray");
 %  f=figure(1, "visible", "off"); 
-  subplot(2,1,1)
+subplot(2,2,1)
+hold on 
+%title("prvi video");
+h=title("prvi video");
+set (h, "fontsize", 20);
+imshow(prvi.podvzorcene_slike(:,:,1+250));
+hold off
+subplot(2,2,2)
+hold on 
+g=title("drugi video");
+set (g, "fontsize", 20);
+%title("drugi video");
+imshow(drugi.podvzorcene_slike(:,:,251+250));
+hold off
 
-    imagesc(crna_slika);
-  subplot(2,1,2)
-
-    imagesc(crna_slika);
-%  h=text(numel(vektor)*0.20,-0.2,"prvi video");
-  h=title("prvi video");
-  set (h, "fontsize", 15);
-%  g=text(numel(vektor)*0.80,-0.2,"drugi video");
-  g=title("drugi video");
-  set (g, "fontsize", 15);
-  subplot(2,1,3)
-  plot(vektor_razlik); 
+subplot(2,2,3:4)
+plot(vsivektorji{1,1}); 
+hold on
+  k=title("drugi video");
+  set (k, "fontsize", 15);
   axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
-  hold on
-  plot(2,vsivektorji{1,1}(2),'*','color','r'); #znak 
-  line ([0 numel(vsivektorji{1,1})], [5 5], "linestyle", "--", "color", "b");
-  hold off
+  plot(250,vsivektorji{1,1}(250),'*','color','r'); 
+  line ([0 numel(vsivektorji{1,1})], [1 1], "linestyle", "--", "color", "b");
+  ylabel("MAD razlika","fontsize",20);
+  xlabel("Indeks razlik med sličicami","fontsize",20);
+hold off
+ saveas (f, "/home/arun/latex/diploma_rework/slike/ujemanje.png", "png")
+
 %
 %%% create data, 25 frames of 512x512 pixels
 %
