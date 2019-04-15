@@ -1,25 +1,27 @@
 pkg load video 
 pkg load image
 
-%pos1 = predprocesiranje("a.mp4");
-%pos2 = predprocesiranje("a.mp4");
-%[b seznam prvi drugi]= korelacija(pos1,pos2,0.5);
-
-%rezanje("big.mp4",15,15,"A.mp4")
-%rezanje("big.mp4",5,35,"B.mp4")
-%prvi_videoposnetek = predprocesiranje("q.mp4");
-%drugi_videoposnetek = predprocesiranje("pr.mp4");
-%prvi_videoposnetek.hash = hash("md5","q.mp4");
-%drugi_videoposnetek.hash = hash("md5","pr.mp4");
-%save("-mat-binary","A","prvi_videoposnetek")
-%save("-mat-binary","B","drugi_videoposnetek")
-A = load("A"); prvi_videoposnetek=A.prvi_videoposnetek;clear A
-B = load("B"); drugi_videoposnetek=B.drugi_videoposnetek;clear B
 
 
-q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
-pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
 
+rezanje("original.mp4",30,5,"konglomerat1.mp4")
+rezanje("original.mp4",10,5,"konglomerat2.mp4")
+rezanje("original.mp4",40,10,"konglomerat3.mp4")
+rezanje("original.mp4",0,25,"izrez.mp4")
+lepljenje({"konglomerat1.mp4";"konglomerat2.mp4";"konglomerat3.mp4"},"konglomerat.mp4")
+
+system("ffmpeg -i konglomerat.mp4 -c:v libx264 -crf 48 konglomerat.flv");
+prvi_videoposnetek = predprocesiranje("konglomerat.flv");
+drugi_videoposnetek = predprocesiranje("izrez.mp4");
+
+konglomerat = load("konglomerat"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
+izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
+
+%q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
+%pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
+
+%A = load("A"); prvi_videoposnetek=A.prvi_videoposnetek;clear A
+%B = load("B"); drugi_videoposnetek=B.drugi_videoposnetek;clear B
 
 %dva_ujemanja = load("dva_ujemanja"); prvi_videoposnetek=dva_ujemanja.prvi_videoposnetek;clear dva_ujemanja
 %t = load("t"); drugi_videoposnetek=t.drugi_videoposnetek;clear t
@@ -33,14 +35,25 @@ pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
 %xy = load("xy"); prvi_videoposnetek=xy.prvi_videoposnetek;clear xy
 %z = load("z"); drugi_videoposnetek=z.drugi_videoposnetek;clear z
 
-[b seznam prvi drugi]= korelacija(drugi_videoposnetek,prvi_videoposnetek,0.5);
+%rezanje("original.mp4",20,0.20,"small_1.mp4")
+%
+%lepljenje({"s1.mp4";"t1.mp4";"s2.mp4";"t2.mp4";"s3.mp4"},"dva_ujemanja.mp4")
+%
 
 
-[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,1,1);
-
-#---testiranje rezultata
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);
 
 
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,1,30);obseg_ujemanja
+
+#---testiranje rezultata edgecase
+plot(b);
+
+hold on
+plot(499,0.1,'*','color','r'); #znak 
+plot(749,0.1,'*','color','r'); #znak 
+set(gca, "fontsize", 12);
+hold off
 
 %plot(vsivektorji{2})
 [vektor_razlik newimg indexvektor] = primerjanje_slik (prvi, drugi,vsivektorji{1,1},seznam(1),1)
@@ -61,12 +74,10 @@ pause(0.004)
 endfor
 
 # ali je vedno +1, zaradi? , to je prej nareidmo np v najdi_ujemanja
-index1=1+375-1
-index2=1 +625+10
+index1=126
+index2=126
 mad(prvi.podvzorcene_slike(:,:,index1),drugi.podvzorcene_slike(:,:,index2))
 %newImg = cat(2,prvi.podvzorcene_slike(:,:,index1),drugi.podvzorcene_slike(:,:,index2))
-
-
 subplot (2, 1, 1)
 imshow(prvi.podvzorcene_slike(:,:,index1))
 subplot (2, 1, 2)
@@ -185,6 +196,16 @@ hold off
 %
 
 
+
+%pos1 = predprocesiranje("a.mp4");
+%pos2 = predprocesiranje("a.mp4");
+%[b seznam prvi drugi]= iskanje_kandidatov(pos1,pos2,0.5);
+
+%rezanje("big.mp4",15,15,"A.mp4")
+%rezanje("big.mp4",5,35,"B.mp4")
+
+
+
 #--------------S IN T testiranje
 #za s
 %rezanje("big.mp4",5,5,"s1.mp4")
@@ -195,11 +216,8 @@ hold off
 %rezanje("big.mp4",50,5,"t2.mp4")
 %
 %lepljenje({"s1.mp4";"t1.mp4";"s2.mp4";"t2.mp4";"s3.mp4"},"dva_ujemanja.mp4")
-%prvi_videoposnetek = predprocesiranje("dva_ujemanja.mp4");
-%drugi_videoposnetek = predprocesiranje("t.mp4");
-%save("-mat-binary","dva_ujemanja","prvi_videoposnetek")
-%save("-mat-binary","t","drugi_videoposnetek")
-
+%save("-mat-binary","A","prvi_videoposnetek")
+%save("-mat-binary","B","drugi_videoposnetek")
 
 %prvi_videoposnetek = predprocesiranje("sample.mp4");
 %drugi_videoposnetek = predprocesiranje("drugisample.mp4");
@@ -207,33 +225,42 @@ hold off
 %drugi_videoposnetek = predprocesiranje("tretjisample.mp4");
 %drugi_videoposnetek = predprocesiranje("kratek.mp4");
 
-%%prvi_videoposnetek = predprocesiranje("ab.mp4");
-%%drugi_videoposnetek = predprocesiranje("c.mp4");
 
 
 
-
-
-
-
-
-
-
-
-
-%%save("-mat-binary","ab","prvi_videoposnetek")
-%%save("-mat-binary","c","drugi_videoposnetek")
 %
-
-
-
-%%prvi_videoposnetek = predprocesiranje("df.mp4");
-%%drugi_videoposnetek = predprocesiranje("g.mp4");
-%%save("-mat-binary","df","prvi_videoposnetek")
-%%save("-mat-binary","g","drugi_videoposnetek")
-
-
+%rezanje("original.mp4",5,5,"p1.mp4")
+%rezanje("original.mp4",15,5,"p2.mp4")
+%rezanje("original.mp4",30,30,"q.mp4")
+%rezanje("original.mp4",35,5,"r1.mp4")
+%rezanje("original.mp4",55,5,"r2.mp4")
+%lepljenje({"p1.mp4";"r1.mp4";"p2.mp4";"r2.mp4"},"pr.mp4")
+%
+%prvi_videoposnetek = predprocesiranje("q.mp4");
+%drugi_videoposnetek = predprocesiranje("pr.mp4");
+%save("-mat-binary","q","prvi_videoposnetek")
+%save("-mat-binary","pr","drugi_videoposnetek")
+%
+%prvi_videoposnetek = predprocesiranje("dva_ujemanja.mp4");
+%drugi_videoposnetek = predprocesiranje("t.mp4");
+%save("-mat-binary","dva_ujemanja","prvi_videoposnetek")
+%save("-mat-binary","t","drugi_videoposnetek")
+%
+%
+%
+%prvi_videoposnetek = predprocesiranje("ab.mp4");
+%drugi_videoposnetek = predprocesiranje("c.mp4");
+%save("-mat-binary","ab","prvi_videoposnetek")
+%save("-mat-binary","c","drugi_videoposnetek")
+%
+%
+%prvi_videoposnetek = predprocesiranje("df.mp4");
+%drugi_videoposnetek = predprocesiranje("g.mp4");
+%save("-mat-binary","df","prvi_videoposnetek")
+%save("-mat-binary","g","drugi_videoposnetek")
+%
+%
 %prvi_videoposnetek = predprocesiranje("xy.mp4");
 %drugi_videoposnetek = predprocesiranje("z.mp4");
-%%save("-mat-binary","xy","prvi_videoposnetek")
-%%save("-mat-binary","z","drugi_videoposnetek")
+%save("-mat-binary","xy","prvi_videoposnetek")
+%save("-mat-binary","z","drugi_videoposnetek")

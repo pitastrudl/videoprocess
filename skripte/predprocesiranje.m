@@ -41,13 +41,3 @@ function [video_struct]= predprocesiranje (video_posnetek)
   video_struct.hash = hash("md5",video_posnetek);
 endfunction
 
-#-----------samo za preglednost je tukaj tole---------
-%function pos = posnetek(video)
-%    pos.datoteka=video;
-%    pos.vektor_sprememb = 0;
-%    pos.podvzorcene_slike = 0;
-%    pos.dolzina = 0;
-%    pos.polozaj_v_normxcorr = "";
-%    pos.vecji = true;
-%    pos.pot_do_posnetka= "";
-%endfunction

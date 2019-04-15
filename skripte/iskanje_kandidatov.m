@@ -1,13 +1,13 @@
 #sprejme dva vektorja
 #vrne vrhove
-function [vektor_korelacije seznam_tau prvi drugi] = korelacija (prvi_posnetek,drugi_posnetek,meja)
+function [vektor_korelacije seznam_tau prvi drugi] = iskanje_kandidatov(prvi_posnetek,drugi_posnetek,meja)
 pkg load signal
 pkg load image
 
 #pogledamo ce sta duplikata
-%if(prvi_posnetek.hash == drugi_posnetek.hash)
-%  error("sta duplikata!");
-%endif
+if(prvi_posnetek.hash == drugi_posnetek.hash)
+  error("sta duplikata!");
+endif
 
 #gledamo če je meja bil podan
 if (exist("meja", "var") != 1)
