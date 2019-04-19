@@ -1,11 +1,11 @@
-function[vsivektorji,zamik,ujemanja] = iskanje_ujemanj (seznam_zamikov, prvivektor,drugivektor,treshold,stevilo_ujemanj)
+function [vsivektorji,zamik,ujemanja] = iskanje_ujemanj(seznam_zamikov, prvivektor,drugivektor,prag,stevilo_ujemanj)
 #dobimo v pravem zaporedju objekta 
   pkg load signal
   pkg load image
   
-  if (exist("treshold", "var") != 1)
-    treshold = 0.5;
-    printf("  ni bil nastiman treshold, default='%d' \n",treshold)
+  if (exist("prag", "var") != 1)
+    prag = 0.5;
+    printf("  ni bil nastiman prag, default='%d' \n",prag)
   endif
   
   zamik = []; 
@@ -36,19 +36,19 @@ function[vsivektorji,zamik,ujemanja] = iskanje_ujemanj (seznam_zamikov, prvivekt
     endfor
     vsivektorji{i}=primerjalni_vektor; # hranimo, samo ker smo radovedni
     
-    if(numel(find(primerjalni_vektor < treshold)) > stevilo_ujemanj ) # gledamo da je ujemanj vsaj za neko stevilo ujemanj
+    if(numel(find(primerjalni_vektor < prag)) > stevilo_ujemanj ) # gledamo da je ujemanj vsaj za neko stevilo ujemanj
       zamik(end+1) = tau;
       obseg_ujemanja = "";
       # za kateri zamik? --treba testirat 
       je_zacetek=true;
       for k=1:length(primerjalni_vektor) 
-        if(primerjalni_vektor(k) < treshold && je_zacetek)
+        if(primerjalni_vektor(k) < prag && je_zacetek)
           obseg_ujemanja = cstrcat(obseg_ujemanja," [ ",int2str(k));
           je_zacetek = false;
-          elseif(primerjalni_vektor(k) > treshold && !je_zacetek)
+          elseif(primerjalni_vektor(k) > prag && !je_zacetek)
           obseg_ujemanja = cstrcat(obseg_ujemanja," - ",int2str(k)," ]");
           je_zacetek = true;
-          elseif(primerjalni_vektor(k) < treshold && !je_zacetek && k == length(primerjalni_vektor))
+          elseif(primerjalni_vektor(k) < prag && !je_zacetek && k == length(primerjalni_vektor))
           obseg_ujemanja = cstrcat(obseg_ujemanja," - ",int2str(k),"]");
         endif
       endfor

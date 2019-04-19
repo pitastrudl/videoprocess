@@ -1,10 +1,8 @@
-function [ vektor_razlik newImg indexvektor] = primerjanje_slik (prvi, drugi,vektor,zamik,treshold)
+function [ vektor_razlik newImg indexvektor] = primerjanje_slik (prvi,drugi,vektor,zamik,treshold)
   pkg load signal
   pkg load image
   pkg load video
 
-  
- 
 newImg= [];
 indexvektor= [];
 
@@ -31,6 +29,7 @@ i++;
 endfor
 
 
+graphics_toolkit("gnuplot")
 # plottamo
 crna_slika(1:size(newImg,1),1:size(newImg,2))=1;
 j=1;
@@ -39,23 +38,27 @@ for i=1:length(indexvektor)  #tukaj naredit, z vektor_razlik, ko bo kazu in ne.
   f=figure(1, "visible", "off"); 
   subplot(2,1,1)
   if(indexvektor(i)) #če je true
-    imagesc(newImg(:,:,j));
+    imshow(newImg(:,:,j));
     j++;
   else
-    imagesc(crna_slika);
+    imshow(crna_slika);
   endif
 %  h=text(numel(vektor)*0.20,-0.2,"prvi video");
-  h=title("prvi video");
-  set (h, "fontsize", 15);
+%  h=title("prvi video");
+%  set (h, "fontsize", 15);
 %  g=text(numel(vektor)*0.80,-0.2,"drugi video");
-  g=title("drugi video");
+  g=title("prvi in drugi video");
   set (g, "fontsize", 15);
   subplot(2,1,2)
+   ylabel("MAD razlika","fontsize",17);
+  xlabel("Indeks razlik med sličicami","fontsize",17);
   plot(vektor); 
   axis ([0 numel(vektor) 0 max(vektor)],"manual");
   hold on;
+   text(200,0.55,"Prag","fontsize",12)
   plot(i,vektor(i),'*','color','r'); #znak 
   line ([0 numel(vektor)], [treshold treshold], "linestyle", "--", "color", "b");
+
   hold off
 %  drawnow();
 %subplot(1,2,1);imshow(prvi.podvzorcene_slike(:,:,126));title("test");subplot(1,2,2);imshow(drugi.podvzorcene_slike(:,:,1));
@@ -187,7 +190,7 @@ endfor
 %subplot (2, 1, 2)
 %imshow(drugi.podvzorcene_slike(:,:,index2))
 %drawnow(); 
-
+graphics_toolkit("qt")
 endfunction
 %>> subplot(2,1,1);imagesc(newimg(:,:,3));subplot(2,1,2);plot(vektor(2))
 %>> subplot(2,1,1);colormap("gray");imagesc(newimg(:,:,3));subplot(2,1,2);plot(vektor(2))
