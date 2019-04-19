@@ -20,3 +20,4 @@ B = load("B"); drugi_videoposnetek=B.drugi_videoposnetek;clear B
 [vsivektorji,zamik,obseg_ujemanj] =iskanje_ujemanj(seznam,prvi,drugi,5,1);obseg_ujemanj
 
 %[vektor_razlik newimg indexvektor] = primerjanje_slik (prvi, drugi,vsivektorji{1,1},seznam(1),1)
+

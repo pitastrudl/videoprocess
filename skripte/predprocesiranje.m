@@ -40,6 +40,7 @@ function [video_struct]= predprocesiranje (video_posnetek)
     for i = 1:dolzina_3D_matrike 
       #filamo vektor, razlika med i-tem in i+1--tem.  
       vektor_sprememb(i)= mad(matrike_video_posnetka(:,:,i), matrike_video_posnetka(:,:,i+1) );  
+%      vektor_sprememb(i)= immse(matrike_video_posnetka(:,:,i), matrike_video_posnetka(:,:,i+1) );  
     end
     podvzorcene_slike=uint8(podvzorcene_slike); # spreminjamo v pravi zapis, drugače imshow ne deluje (shranjuje kot double)
     
