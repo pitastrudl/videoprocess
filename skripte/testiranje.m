@@ -702,6 +702,8 @@ print(f,"/home/arun/latex/diploma_rework/slike/obseg_ujemanj.png", '-dpngcairo')
 
 
 #------------------------------------------- glavni plot test, za poglavje prikaz rezultatov
+close all
+graphics_toolkit("gnuplot")
 figure(1);
 crna_slika(1:100,1:100)=1;
 crna_slika1(1:100,1:100)=1;
@@ -712,7 +714,7 @@ subplot(2,2,1)
 hold on 
 %title("prvi video");
 h=title("prvi video");
-set (h, "fontsize", 20);
+set (h, "fontsize", 17);
 imshow(prvi.podvzorcene_slike(:,:,1+250));
 hold off
 subplot(2,2,2)
@@ -726,24 +728,29 @@ hold off
 subplot(2,2,3:4)
 plot(vsivektorji{1,1}); 
 hold on
-  k=title("drugi video");
+  k=title("Obseg ujemanj");
   set (k, "fontsize", 15);
   axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(250,vsivektorji{1,1}(250),'*','color','r'); 
   line ([0 numel(vsivektorji{1,1})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD razlika","fontsize",20);
-  xlabel("Indeks razlik med sličicami","fontsize",20);
+  ylabel("MAD razlika","fontsize",17);
+  xlabel("Indeks razlik med sličicami","fontsize",17);
 hold off
- saveas (f, "/home/arun/latex/diploma_rework/slike/ujemanje.png", "png")
+% saveas (f, "/home/arun/latex/diploma_rework/slike/ujemanje.png", "png")
+print(f,"/home/arun/latex/diploma_rework/slike/ujemanje.png", '-dpngcairo')
 
  
 #-----------------------testing utf
 close all
 graphics_toolkit("qt")
 f = figure(1)
+%set(f,"defaulttextfontname","Courier") 
+% h = findall (f, "-property", "fontname"); 
+%        set (h, "fontname", "Courier new") 
  x = 1:5;  y = 1:5;
  plot (x,y,"g");
- title ("tthe next 3 letters should be printer: čšž");
+ title ("the next 3 letters should be printer: čšž");
+ set(gca, 'fontname', 'Courier New')
  saveas (f, "test.png", "png")
  
 %
