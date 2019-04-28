@@ -138,6 +138,31 @@ drawnow();
 
 
 
+#-----------------------plot za prvi testni primer, navadna vsebovanost ---korelacija 
+konglomerat = load("konglomeratmp4"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
+izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.5);seznam
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
+
+close all
+graphics_toolkit("gnuplot")
+f=figure(1);
+x=b;
+x=1-500:numel(b)-500;
+plot(x,b);
+%plot(b)
+
+  set(gca, "fontsize", 14);
+  ylabel("Vrednost korelacije med \n vektorjema sprememb","fontsize",14);
+  xlabel("Vrednost kandidata za zamik","fontsize",14);
+
+
+print(f,"/home/arun/latex/diploma_rework/slike/testprimerbreztrans.png", '-dpngcairo')
+% saveas (f, "/home/arun/latex/diploma_rework/slike/testprimerundersample.png", "png")
+
+
+
+
 
 
 
@@ -181,11 +206,8 @@ hold on
   
   h=title("Vektor sprememb \n prvega video posnetka");
   set (h, "fontsize", 15);
-  
- 
   hold off
   saveas (f, "/home/arun/latex/diploma_rework/slike/msdvsprememb_cut.png", "png")
-  
   
   
   print(f,"/home/arun/latex/diploma_rework/slike/msdvsprememb.png", '-dpngcairo')
@@ -193,20 +215,27 @@ hold on
 
 
 #---------------------------testiranje korelacija vec ujemanj 
+q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
+pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);seznam
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
 close all
-figure(1)
-  plot(b);
+graphics_toolkit("gnuplot")
+f=figure(1);
+x=b;
+x=1-500:numel(b)-500;
+plot(x,b);
 
   hold on
   %plot(499,0.1,'*','color','r'); #znak 
   %plot(749,0.1,'*','color','r'); #znak 
      xlabel("Vrednost kandidata za zamik","fontsize",16);
      ylabel("Vrednost korelacije med vektorjema sprememb","fontsize",16);
-     axis ([450 550 ],"manual");
-  set(gca, "fontsize", 20);
+     axis ([450-500 550-500 ],"manual");
+  set(gca, "fontsize", 17);
   hold off
-   saveas (f, "/home/arun/latex/diploma_rework/slike/korelacijavecujemanj.png", "png")
-   
+%   saveas (f, "/home/arun/latex/diploma_rework/slike/korelacijavecujemanj.png", "png")
+     print(f,"/home/arun/latex/diploma_rework/slike/korelacijavecujemanj.png", '-dpngcairo')
    
    
 #--------------------------------zakaj ni ujemanje tau 250
@@ -378,8 +407,10 @@ izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
 
 close all
 graphics_toolkit("gnuplot")
+x=b;
+x=1-500:numel(b)-500;
+plot(x,b);
 
-  plot(b);
 
   hold on
   %plot(499,0.1,'*','color','r'); #znak 
@@ -525,8 +556,8 @@ hold on
 %  axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(126,vsivektorji{1,10}(126),'*','color','r'); 
 %  line ([0 numel(vsivektorji{1,10})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD razlika","fontsize",17);
-  xlabel("Indeks razlik med sličicami","fontsize",17);
+  ylabel("MAD vrednost","fontsize",17);
+  xlabel("Zamik","fontsize",17);
 hold off
 % saveas (f, "/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer1.png", "png")
   print(f,"/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer1.png", '-dpngcairo')
@@ -571,8 +602,8 @@ hold on
 %  axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(126,vsivektorji{1,11}(126),'*','color','r'); 
 %  line ([0 numel(vsivektorji{1,10})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD razlika","fontsize",17);
-  xlabel("Indeks razlik med sličicami","fontsize",17);
+  ylabel("MAD vrednost","fontsize",17);
+  xlabel("Zamik","fontsize",17);
 hold off
   print(f,"/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer2.png", '-dpngcairo')
 
@@ -586,7 +617,10 @@ izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
 [b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.05);seznam
 
 f=figure(1);
- plot(b);
+ x=b;
+x=1-500:numel(b)-500;
+plot(x,b);
+
 
 hold on
 %plot(499,0.1,'*','color','r'); #znak 
@@ -607,7 +641,9 @@ izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
 [vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
 
 close all
-plot(b);
+x=b;
+x=1-500:numel(b)-500;
+plot(x,b);
 
 hold on
 %plot(499,0.1,'*','color','r'); #znak 
@@ -662,15 +698,17 @@ close all
 graphics_toolkit("gnuplot")
 
 f=figure(1);
-plot(b);
-xlabel("Zamiki križne korelacije","fontsize",17);
+x=b;
+x=1-375:numel(b)-375;
+plot(x,b);
+xlabel("Indeks zamika križne korelacije","fontsize",17);
 ylabel("Vrednost križne korelacije","fontsize",17);
 set(gca, "fontsize", 12)
- line ([0 numel(b)], [0.5 0.5], "linestyle", "--", "color", "b");
- text(200,0.55,"Prag","fontsize",12)
+ line ([1-375 numel(b)-375], [0.5 0.5], "linestyle", "--", "color", "b");
+ text(450,0.55,"Prag","fontsize",12)
  hold on;
- plot(624,0.6,'*','color','r'); #znak 
- text(628,0.6,"624","fontsize",10)
+ plot(624-375,0.6,'*','color','r'); #znak 
+ text(628-375,0.6,"624","fontsize",10)
  hold off;
 % saveas (f, "/home/arun/latex/diploma_rework/slike/korelacija.png", "png")
 print(f,"/home/arun/latex/diploma_rework/slike/korelacija.png", '-dpngcairo')
@@ -688,8 +726,8 @@ treshold=0.5;
 f=figure(1);
 plot(vsivektorji{1,1});
 treshold = 1;
-xlabel("Razlika med podvzorčenimi sličicami","fontsize",20);
-ylabel("Indeks razlik med sličicami","fontsize",20);
+xlabel("Indeks razlik med sličicami" ,"fontsize",17);
+ylabel("Razlika med \n podvzorčenimi sličicami","fontsize",17);
 set(gca, "fontsize", 12)
 line ([0 numel(vsivektorji{1,1})], [treshold treshold], "linestyle", "--", "color", "b");
 text(100,treshold + 0.05,"Prag","fontsize",12)

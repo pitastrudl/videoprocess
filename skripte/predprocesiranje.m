@@ -18,7 +18,7 @@ function [video_struct]= predprocesiranje (video_posnetek)
       endif
       frame = captureObjekt.read('FlipChannels',true); 
 
-      #dodal na novo, flv se ni bral vredu
+      #dodal na novo, branje flv datoteke, vrne na koncu prazne frame, brez elementov. 
       if(size(frame,1)==0)
         break 
       endif 
