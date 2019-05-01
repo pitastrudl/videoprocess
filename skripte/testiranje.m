@@ -102,11 +102,128 @@ bvid = load("B"); drugi_videoposnetek=bvid.drugi_videoposnetek;clear bvid
 %endfor
 
 
+A=255*rand(2)
+B=255*rand(2)
+
+
+mad(uint8(A),uint8(B))
+mad(A,B)
+
+sum((A(:)-B(:)).^2)/numel(A)
+msd(A,B)
+immse(A,B)
+#NE MARA DOUBLEA 
 
 
 
 
-#----------------------------------------manual xcorr
+#------------------------------------------------------------------------------------------------------msd enega vektorja + cut več ujemanj 
+%print(f,"/home/arun/latex/diploma_rework/slike/msdvsprememb.png", '-dpngcairo')
+
+prvi_videoposnetek = predprocesiranje("q.mp4");
+drugi_videoposnetek = predprocesiranje("pr.mp4");
+save("-mat-binary","q_msd","prvi_videoposnetek")
+save("-mat-binary","pr_msd","drugi_videoposnetek")
+
+prvi_videoposnetek = predprocesiranje("q.mp4");
+drugi_videoposnetek = predprocesiranje("pr.mp4");
+save("-mat-binary","q_mad","prvi_videoposnetek")
+save("-mat-binary","pr_mad","drugi_videoposnetek")
+
+
+q_mad = load("q_mad"); prvi_videoposnetek_mad=q_mad.prvi_videoposnetek;clear q_mad
+pr_mad = load("pr_mad"); drugi_videoposnetek_mad=pr_mad.drugi_videoposnetek;clear pr_mad
+
+q_msd = load("q_msd"); prvi_videoposnetek_msd=q_msd.prvi_videoposnetek;clear q_msd
+pr_msd = load("pr_msd"); drugi_videoposnetek_msd=pr_msd.drugi_videoposnetek;clear pr_msd
+
+
+
+drugicut.vektor_sprememb = arrayfun(@rezaj_kandidate,drugi_videoposnetek_msd.vektor_sprememb,80 );
+prvicut.vektor_sprememb = arrayfun(@rezaj_kandidate,prvi_videoposnetek_msd.vektor_sprememb,80 );
+
+
+[b seznam prvi drugi]= iskanje_kandidatov(prvi_videoposnetek_mad,drugi_videoposnetek_mad,0.1);
+
+
+[c seznamcut prvicut drugicut]= iskanje_kandidatov(prvicut,drugicut,0.1);
+%[c seznamcut prvicut drugicut]= iskanje_kandidatov(prvi_videoposnetek_msd,drugi_videoposnetek_msd,0.1);
+%[vsivektorji_cut,zamik_cut,obseg_ujemanja_cut] =iskanje_ujemanj(seznamcut,prvicut,drugicut,5,25);
+
+
+#--testiramo msd
+index1=1;
+index2=2
+msd(prvi_videoposnetek_msd.podvzorcene_slike(:,:,index1),prvi_videoposnetek_msd.podvzorcene_slike(:,:,index2))
+prvi_videoposnetek_msd.vektor_sprememb(index1)
+plot(prvicut.vektor_sprememb,"linestyle","--")
+
+    podv = prvi_videoposnetek_msd.podvzorcene_slike;
+    for i = 1:size(podv,3)-1
+      #filamo vektor, razlika med i-tem in i+1--tem.  
+%     vektor_sprememb(i)= mad(matrike_video_posnetka(:,:,i), matrike_video_posnetka(:,:,i+1) );  
+     testvekt(i)= msd(podv(:,:,i), podv(:,:,i+1) );
+    end
+    
+#-----
+
+
+
+close all
+graphics_toolkit("qt")
+f=figure(1);
+subplot(2,2,1:2)
+hold on
+  x=b;
+  x=1-500:numel(b)-500;
+  plot(x,b);
+
+  y=c;
+  y=1-500:numel(c)-500;
+  plot(y,c,"linestyle","--");
+  
+  hs = legend ({"korelacija \n z mad"}, "korelacija \n z msd");
+  legend (hs, "location", "northeast");
+  xlabel("Vrednost kandidata za zamik","fontsize",14);
+  ylabel("Vrednost korelacije med \n vektorjema sprememb","fontsize",14);
+  g=title("Vektor korelacije med video posnetkoma");
+  set (g, "fontsize", 15);
+
+subplot(2,2,3)
+  hold on
+  x=b;
+  x=1-500:numel(b)-500;
+  plot(x,b);
+  y=c;
+  y=1-500:numel(c)-500;
+  plot(y,c,"linestyle","--");
+  
+  hj = legend ({"korelacija z mad"}, "korelacija  z msd");
+  legend (hj, "location", "southoutside");
+  h=title("Vektor korelacije \n med 400 in 600");
+  set (h, "fontsize", 15);
+  axis ([-100 100],"manual");
+subplot(2,2,4)
+hold on
+   
+    plot(prvi.vektor_sprememb)
+     plot(prvicut.vektor_sprememb,"linestyle","--")
+    hh = legend ({"mad vektor sprememb"}, "msd vektor sprememb");
+  legend (hh, "location", "southoutside");
+  h=title("Vektor sprememb \n prvega video posnetka");
+  set (h, "fontsize", 15);
+  hold off
+  
+  saveas (f, "/home/arun/latex/diploma_rework/slike/msdvsprememb_cut.png", "png")
+  
+
+  legend("show")
+  
+  print(f,"/home/arun/latex/diploma_rework/slike/msdvsprememb.png", '-dpngcairo')
+
+
+
+#--------------------------------------------------------------------------------manual xcorr
 
 vekt1 = prvi.vektor_sprememb;
 vekt2 = drugi.vektor_sprememb(1:499);
@@ -115,9 +232,6 @@ vekt2= arrayfun(@rezaj_kandidate,vekt2,20 );
 [korelacijskivektor lagi] = xcorr(vekt1,vekt2);
 %korelacijskivektor = corr2(vekt1,vekt2);
 plot(korelacijskivektor)
-
-
-
 
 
 
@@ -166,54 +280,6 @@ print(f,"/home/arun/latex/diploma_rework/slike/testprimerbreztrans.png", '-dpngc
 
 
 
-
-#------------------------------msd enega vektorja + cut 
-print(f,"/home/arun/latex/diploma_rework/slike/msdvsprememb.png", '-dpngcairo')
-prvicut= prvi_videoposnetek;
-drugicut= drugi_videoposnetek;
-drugicut.vektor_sprememb = arrayfun(@rezaj_kandidate,drugi_videoposnetek.vektor_sprememb,2000 );
-prvicut.vektor_sprememb = arrayfun(@rezaj_kandidate,prvi_videoposnetek.vektor_sprememb,2000 );
-
-[c seznamcut prvicut drugicut]= iskanje_kandidatov(drugicut,prvicut,0.1);
-[vsivektorji_cut,zamik_cut,obseg_ujemanja_cut] =iskanje_ujemanj(seznamcut,prvicut,drugicut,5,25);
-
-
-close all
-graphics_toolkit("qt")
-f=figure(1);
-subplot(2,2,1:2)
-hold on
-   plot(b)
-   plot(c,"linestyle","--")
-   
-   xlabel("Vrednost kandidata za zamik","fontsize",14);
-   ylabel("Vrednost korelacije med \n vektorjema sprememb","fontsize",14);
-   g=title("Vektor sprememb prvega video posnetka");
-  set (g, "fontsize", 15);
-
-subplot(2,2,3)
- hold on
-  plot(b)
-  plot(c,"linestyle","--")
- 
-  h=title("Vektor korelacije \n med 400 in 600");
-  set (h, "fontsize", 15);
-  axis ([400 600],"manual");
-subplot(2,2,4)
-hold on
-    plot(prvicut.vektor_sprememb)
-    plot(prvi.vektor_sprememb,"linestyle","--")
-  
-  h=title("Vektor sprememb \n prvega video posnetka");
-  set (h, "fontsize", 15);
-  hold off
-  saveas (f, "/home/arun/latex/diploma_rework/slike/msdvsprememb_cut.png", "png")
-  
-  
-  print(f,"/home/arun/latex/diploma_rework/slike/msdvsprememb.png", '-dpngcairo')
-
-
-
 #---------------------------testiranje korelacija vec ujemanj 
 q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
 pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
@@ -229,15 +295,14 @@ plot(x,b);
   hold on
   %plot(499,0.1,'*','color','r'); #znak 
   %plot(749,0.1,'*','color','r'); #znak 
-     xlabel("Vrednost kandidata za zamik","fontsize",16);
-     ylabel("Vrednost korelacije med vektorjema sprememb","fontsize",16);
+     xlabel("Vrednost zamika","fontsize",16);
+     ylabel("Vrednost korelacije med \n vektorjema sprememb","fontsize",16);
      axis ([450-500 550-500 ],"manual");
   set(gca, "fontsize", 17);
   hold off
 %   saveas (f, "/home/arun/latex/diploma_rework/slike/korelacijavecujemanj.png", "png")
      print(f,"/home/arun/latex/diploma_rework/slike/korelacijavecujemanj.png", '-dpngcairo')
-   
-   
+
 #--------------------------------zakaj ni ujemanje tau 250
 
 close all
@@ -299,6 +364,61 @@ subplot(2,3,5:6)
   set(gca, "fontsize", 10);
   hold off
   saveas (f, "/home/arun/latex/diploma_rework/slike/edgecasemadujemanja.png", "png")
+  
+
+#------------------------------------------------------------------testiranje mar
+q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
+pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);seznam
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,20,25);obseg_ujemanja
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,30,25);obseg_ujemanja
+
+f=figure(1);
+  subplot(2,3,1)
+  hold on
+  h=title("Tau -32");
+  set (h, "fontsize", 20);
+  plot(vsivektorji{1,9})
+  set(gca, "fontsize", 10);
+  hold off
+subplot(2,3,2)
+ hold on
+  h=title("Tau -29");
+  set (h, "fontsize", 20);
+  plot(vsivektorji{1,10})
+  set(gca, "fontsize", 10);
+  hold off
+subplot(2,3,3)
+ hold on
+  h=title("Tau 24");
+  set (h, "fontsize", 20);
+  plot(vsivektorji{1,11})
+  set(gca, "fontsize", 10);
+  hold off
+subplot(2,3,4)
+   hold on
+  h=title("Tau 258");
+  set (h, "fontsize", 20);
+  plot(vsivektorji{1,20})
+  set(gca, "fontsize", 10);
+  hold off
+subplot(2,3,5:6)
+  hold on  
+  h=title("Tau 250");
+  set (h, "fontsize", 20);
+  plot(vsivektorji{1,19})
+  set(gca, "fontsize", 10);
+  hold off
+  saveas (f, "/home/arun/latex/diploma_rework/slike/marprimerjanje.png", "png")
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -657,36 +777,50 @@ hold off
  saveas (f, "/home/arun/latex/diploma_rework/slike/testprimer2_korel.png", "png")
    
    #----------------------------------------------plotting obeh madjev
+prvi_videoposnetek = predprocesiranje("A.mp4");
+drugi_videoposnetek = predprocesiranje("B.mp4");
+save("-mat-binary","A","prvi_videoposnetek")
+save("-mat-binary","B","drugi_videoposnetek")
+
+avid = load("A"); prvi_videoposnetek_prev=avid.prvi_videoposnetek;clear avid
+bvid = load("B"); drugi_videoposnetek_prev=bvid.drugi_videoposnetek;clear bvid
+   
+   #TEST
+   subplot(2,1,1)
+   prvi_videoposnetek.vektor_sprememb(168)
+   prvi_videoposnetek_prev.vektor_sprememb(168)
+   avid = load("A"); prvi_videoposnetek_prev=avid.prvi_videoposnetek;clear avid
+   plot(prvi_videoposnetek_prev.vektor_sprememb)
+  
+   subplot(2,1,2)
+   plot(prvi_videoposnetek.vektor_sprememb)
+  
+  sum(prvi_videoposnetek.vektor_sprememb(:))
+  sum( prvi_videoposnetek_prev.vektor_sprememb(:))
+   
+   G=prvi_videoposnetek.vektor_sprememb;
+   H=prvi_videoposnetek_prev.vektor_sprememb;
+   J=H-G;
+   max(J)
+   sum(H(:))
+   sum(G(:))
+   
    
 close all
-graphics_toolkit("gnuplot")
-   
-   avid = load("A"); prvi_videoposnetek=avid.prvi_videoposnetek;clear avid
-bvid = load("B"); drugi_videoposnetek=bvid.drugi_videoposnetek;clear bvid
-   
-   f=figure(1);
-
+  graphics_toolkit("gnuplot")
+  f=figure(1);
   hold on
-    h=title("Prvi video posnetek");
-   set (h, "fontsize", 15);
-   xlabel("Jakost razlike","fontsize",14);
-   ylabel("Indeks razlik med sličicami","fontsize",14);
+  h=title("Prvi video posnetek");
+  set (h, "fontsize", 15);
+  xlabel("Jakost razlike","fontsize",14);
+  ylabel("Indeks razlik med sličicami","fontsize",14);
   plot(prvi_videoposnetek.vektor_sprememb)
-  %subplot (2, 1, 2)
-  %plot(drugi.vektor_sprememb)
-  %  h=title("Drugi video posnetek");
-  %  set (h, "fontsize", 15);
-  % xlabel("Jakost razlike","fontsize",14);
-  % ylabel("Indeks razlik med sličicami","fontsize",14);
-   hold off
-     print(f,"/home/arun/latex/diploma_rework/slike/madobeh.png", '-dpngcairo')
+  hold off
+print(f,"/home/arun/latex/diploma_rework/slike/madobeh.png", '-dpngcairo')
 
-%    saveas (f, "/home/arun/latex/diploma_rework/slike/madobeh.png", "png")
 
-    
-    
-    
- 
+
+
 #------------------------------------------------plottanje korelacije
    
 avid = load("A"); prvi_videoposnetek=avid.prvi_videoposnetek;clear avid
@@ -815,10 +949,12 @@ f = figure(1)
 
 %rezanje("original.mp4",15,15,"A.mp4")
 %rezanje("original.mp4",5,35,"B.mp4")
+
 %prvi_videoposnetek = predprocesiranje("A.mp4");
 %drugi_videoposnetek = predprocesiranje("B.mp4");
 %save("-mat-binary","A","prvi_videoposnetek")
 %save("-mat-binary","B","drugi_videoposnetek")
+
 %avid = load("A"); prvi_videoposnetek=avid.prvi_videoposnetek;clear avid
 %bvid = load("B"); drugi_videoposnetek=bvid.drugi_videoposnetek;clear bvid
 
@@ -854,8 +990,13 @@ f = figure(1)
 %
 %prvi_videoposnetek = predprocesiranje("q.mp4");
 %drugi_videoposnetek = predprocesiranje("pr.mp4");
-%save("-mat-binary","q","prvi_videoposnetek")
-%save("-mat-binary","pr","drugi_videoposnetek")
+%save("-mat-binary","q_mad","prvi_videoposnetek")
+%save("-mat-binary","pr_mad","drugi_videoposnetek")
+%
+%prvi_videoposnetek = predprocesiranje("q.mp4");
+%drugi_videoposnetek = predprocesiranje("pr.mp4");
+%save("-mat-binary","q_msd","prvi_videoposnetek")
+%save("-mat-binary","pr_msd","drugi_videoposnetek")
 %
 %prvi_videoposnetek = predprocesiranje("dva_ujemanja.mp4");
 %drugi_videoposnetek = predprocesiranje("t.mp4");
