@@ -842,7 +842,7 @@ set(gca, "fontsize", 12)
  text(450,0.55,"Prag","fontsize",12)
  hold on;
  plot(624-375,0.6,'*','color','r'); #znak 
- text(628-375,0.6,"624","fontsize",10)
+ text(628-370,0.6,"250","fontsize",10)
  hold off;
 % saveas (f, "/home/arun/latex/diploma_rework/slike/korelacija.png", "png")
 print(f,"/home/arun/latex/diploma_rework/slike/korelacija.png", '-dpngcairo')
