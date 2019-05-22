@@ -2,9 +2,10 @@ pkg load video
 pkg load image
 
 if(true)
+  error("dont run this")
   break
 endif
-error("dont run this")
+
 
 #---testni primeri
 %rezanje("original.mp4",30,5,"konglomerat1.mp4")
@@ -287,18 +288,16 @@ pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
 [vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
 close all
 graphics_toolkit("gnuplot")
-f=figure(1);
+f=figure(1,'position', [300,300, 500, 250]);
 x=b;
 x=1-500:numel(b)-500;
 plot(x,b);
 
   hold on
-  %plot(499,0.1,'*','color','r'); #znak 
-  %plot(749,0.1,'*','color','r'); #znak 
-     xlabel("Vrednost zamika","fontsize",16);
-     ylabel("Vrednost korelacije med \n vektorjema sprememb","fontsize",16);
-     axis ([450-500 550-500 ],"manual");
-  set(gca, "fontsize", 17);
+     xlabel("Vrednost zamika","fontsize",14);
+     ylabel("Vrednost korelacije med \n vektorjema sprememb","fontsize",14);
+     axis ([450-500 550-500 -0.1 0.3 ],"manual");
+  set(gca, "fontsize", 14);
   hold off
 %   saveas (f, "/home/arun/latex/diploma_rework/slike/korelacijavecujemanj.png", "png")
      print(f,"/home/arun/latex/diploma_rework/slike/korelacijavecujemanj.png", '-dpngcairo')
@@ -433,30 +432,33 @@ graphics_toolkit("gnuplot")
 
 index1=1      +127
 index2=1+ 124  +127
+imwrite (prvi.podvzorcene_slike(:,:,index1), "/home/arun/latex/diploma_rework/slike/testprimerundersample1.png");
+imwrite (drugi.podvzorcene_slike(:,:,index2), "/home/arun/latex/diploma_rework/slike/testprimerundersample2.png");
+
 mad(prvi.podvzorcene_slike(:,:,index1),drugi.podvzorcene_slike(:,:,index2))
 f=figure(1);
 colormap("gray");
 %  f=figure(1, "visible", "off"); 
-subplot(2,2,1)
-hold on 
-%title("prvi video");
-h=title("prvi video");
-set (h, "fontsize", 20);
-imshow(prvi.podvzorcene_slike(:,:,index1))
-hold off
-
-subplot(2,2,2)
-hold on 
-g=title("drugi video");
-set (g, "fontsize", 20);
-imshow(drugi.podvzorcene_slike(:,:,index2))
-hold off
-
-subplot(2,2,3:4)
+%subplot(2,2,1)
+%hold on 
+%%title("prvi video");
+%h=title("prvi video");
+%set (h, "fontsize", 20);
+%imshow(prvi.podvzorcene_slike(:,:,index1))
+%hold off
+%
+%subplot(2,2,2)
+%hold on 
+%g=title("drugi video");
+%set (g, "fontsize", 20);
+%imshow(drugi.podvzorcene_slike(:,:,index2))
+%hold off
+%
+%subplot(2,2,3:4)
 plot(vsivektorji{1,11}); 
 hold on
-  k=title("vektor razlik v obsegu ujemanja");
-  set (k, "fontsize", 15);
+%  k=title("vektor razlik v obsegu ujemanja");
+%  set (k, "fontsize", 15);
 %  axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(127,vsivektorji{1,11}(127),'*','color','r'); 
 %  line ([0 numel(vsivektorji{1,10})], [1 1], "linestyle", "--", "color", "b");
@@ -476,44 +478,54 @@ print(f,"/home/arun/latex/diploma_rework/slike/testprimerundersample.png", '-dpn
 #-------------------------------------------------------------------------plot za testni primer kompresije mpeg4
 konglomerat = load("konglomeratmpeg4"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
 izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
-[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);seznam
-[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);
 
-graphics_toolkit("gnuplot")
+
 index1=1 + 127
 index2=1+ 127 +124
-f=figure(1);
+
+imwrite (prvi.podvzorcene_slike(:,:,index1), "/home/arun/latex/diploma_rework/slike/mpeg4primer1.png");
+imwrite (drugi.podvzorcene_slike(:,:,index2), "/home/arun/latex/diploma_rework/slike/mpeg4primer2.png");
+
+close all
+graphics_toolkit("gnuplot")
+%f=figure(1);
+f=figure(1,'position', [300,300, 500, 200]);
 colormap("gray");
+
+
 %  f=figure(1, "visible", "off"); 
-subplot(2,2,1)
-hold on 
-%title("prvi video");
-h=title("prvi video");
-set (h, "fontsize", 20);
-imshow(prvi.podvzorcene_slike(:,:,index1))
-hold off
-
-subplot(2,2,2)
-hold on 
-g=title("drugi video");
-set (g, "fontsize", 20);
-imshow(drugi.podvzorcene_slike(:,:,index2))
-hold off
-
-subplot(2,2,3:4)
+%subplot(2,2,1)
+%hold on 
+%%title("prvi video");
+%h=title("prvi video");
+%set (h, "fontsize", 20);
+%imshow(prvi.podvzorcene_slike(:,:,index1))
+%hold off
+%
+%subplot(2,2,2)
+%hold on 
+%g=title("drugi video");
+%set (g, "fontsize", 20);
+%imshow(drugi.podvzorcene_slike(:,:,index2))
+%hold off
+%
+%subplot(2,2,3:4)
 
 plot(vsivektorji{1,11}); 
 
+ set(gca, "fontsize", 14)
 
 hold on
-  k=title("vektor razlik v obsegu ujemanja");
-  set (k, "fontsize", 15);
+%  k=title("vektor razlik v obsegu ujemanja");
+%  set (k, "fontsize", 14);
 %  axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(127,vsivektorji{1,11}(127),'*','color','r',"markersize", 5); 
 %  line ([0 numel(vsivektorji{1,10})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD razlika","fontsize",17);
-  xlabel("Indeks razlik med sličicami","fontsize",17);
-   set(gca, "fontsize", 13);
+  ylabel("MAD razlika","fontsize",14);
+  xlabel("Indeks razlik med sličicami","fontsize",14);
+
 hold off
  print(f,"/home/arun/latex/diploma_rework/slike/mpeg4primer.png", '-dpngcairo')
 % saveas (f, "/home/arun/latex/diploma_rework/slike/mpeg4primer.png", "png")
@@ -596,38 +608,40 @@ izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
 graphics_toolkit("gnuplot")
 index1=1 + 126
 index2=1+ 126 +125
+imwrite (prvi.podvzorcene_slike(:,:,index1), "/home/arun/latex/diploma_rework/slike/flvprimervideo1.png");
+imwrite (drugi.podvzorcene_slike(:,:,index2), "/home/arun/latex/diploma_rework/slike/flvprimervideo2.png");
 
 f=figure(1);
 colormap("gray");
 %  f=figure(1, "visible", "off"); 
-subplot(2,2,1)
-hold on 
-%title("prvi video");
-h=title("prvi video");
-set (h, "fontsize", 20);
-imshow(prvi.podvzorcene_slike(:,:,index1))
-hold off
-
-subplot(2,2,2)
-hold on 
-g=title("drugi video");
-set (g, "fontsize", 20);
-imshow(drugi.podvzorcene_slike(:,:,index2))
-hold off
-
-subplot(2,2,3:4)
+%subplot(2,2,1)
+%hold on 
+%%title("prvi video");
+%h=title("prvi video");
+%set (h, "fontsize", 20);
+%imshow(prvi.podvzorcene_slike(:,:,index1))
+%hold off
+%
+%subplot(2,2,2)
+%hold on 
+%g=title("drugi video");
+%set (g, "fontsize", 20);
+%imshow(drugi.podvzorcene_slike(:,:,index2))
+%hold off
+%
+%subplot(2,2,3:4)
 
 plot(vsivektorji{1,79}); 
-
+set(gca, "fontsize", 12)
 
 hold on
-  k=title("vektor razlik v obsegu ujemanja");
-  set (k, "fontsize", 15);
+%  k=title("vektor razlik v obsegu ujemanja");
+%  set (k, "fontsize", 15);
 %  axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(126,vsivektorji{1,79}(126),'*','color','r'); 
 %  line ([0 numel(vsivektorji{1,10})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD razlika","fontsize",20);
-  xlabel("Indeks razlik med sličicami","fontsize",20);
+  ylabel("MAD razlika","fontsize",13);
+  xlabel("Indeks razlik med sličicami","fontsize",13);
 hold off
  print(f,"/home/arun/latex/diploma_rework/slike/flvprimervideo.png", '-dpngcairo')
 % saveas (f, "/home/arun/latex/diploma_rework/slike/flvprimervideo.png", "png")
@@ -645,39 +659,42 @@ izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
 [vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
 index1=1 + 126
 index2=1+ 126 +101
+imwrite (prvi.podvzorcene_slike(:,:,index1), "/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer1_1.png");
+imwrite (drugi.podvzorcene_slike(:,:,index2), "/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer1_2.png");
 
 close all
 graphics_toolkit("gnuplot")
 f=figure(1);
 colormap("gray");
 %  f=figure(1, "visible", "off"); 
-subplot(2,2,1)
-hold on 
+%subplot(2,2,1)
+%hold on 
 %title("prvi video");
-h=title("prvi video");
-set (h, "fontsize", 20);
-imshow(prvi.podvzorcene_slike(:,:,index1))
-hold off
-
-subplot(2,2,2)
-hold on 
-g=title("drugi video");
-set (g, "fontsize", 20);
-imshow(drugi.podvzorcene_slike(:,:,index2))
-hold off
-
-subplot(2,2,3:4)
+%h=title("prvi video");
+%set (h, "fontsize", 20);
+%imshow(prvi.podvzorcene_slike(:,:,index1))
+%hold off
+%
+%subplot(2,2,2)
+%hold on 
+%g=title("drugi video");
+%set (g, "fontsize", 20);
+%imshow(drugi.podvzorcene_slike(:,:,index2))
+%hold off
+%
+%subplot(2,2,3:4)
 
 plot(vsivektorji{1,10}); 
+set(gca, "fontsize", 12)
 
 hold on
-  k=title("vektor razlik v obsegu ujemanja");
-  set (k, "fontsize", 15);
+%  k=title("vektor razlik v obsegu ujemanja");
+%  set (k, "fontsize", 15);
 %  axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(126,vsivektorji{1,10}(126),'*','color','r'); 
 %  line ([0 numel(vsivektorji{1,10})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD vrednost","fontsize",17);
-  xlabel("Zamik","fontsize",17);
+  ylabel("MAD vrednost","fontsize",13);
+  xlabel("Zamik","fontsize",13);
 hold off
 % saveas (f, "/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer1.png", "png")
   print(f,"/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer1.png", '-dpngcairo')
@@ -690,40 +707,41 @@ izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
 [vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
 index1=1 + 126
 index2=1+ 126 +125
+imwrite (prvi.podvzorcene_slike(:,:,index1), "/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer2_1.png");
+imwrite (drugi.podvzorcene_slike(:,:,index2), "/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer2_2.png");
 
 close all
 graphics_toolkit("gnuplot")
-
 f=figure(1);
 colormap("gray");
-%  f=figure(1, "visible", "off"); 
-subplot(2,2,1)
-hold on 
-%title("prvi video");
-h=title("prvi video");
-set (h, "fontsize", 20);
-imshow(prvi.podvzorcene_slike(:,:,index1))
-hold off
-
-subplot(2,2,2)
-hold on 
-g=title("drugi video");
-set (g, "fontsize", 20);
-imshow(drugi.podvzorcene_slike(:,:,index2))
-hold off
-
-subplot(2,2,3:4)
+%%  f=figure(1, "visible", "off"); 
+%subplot(2,2,1)
+%hold on 
+%%title("prvi video");
+%h=title("prvi video");
+%set (h, "fontsize", 20);
+%imshow(prvi.podvzorcene_slike(:,:,index1))
+%hold off
+%
+%subplot(2,2,2)
+%hold on 
+%g=title("drugi video");
+%set (g, "fontsize", 20);
+%imshow(drugi.podvzorcene_slike(:,:,index2))
+%hold off
+%
+%subplot(2,2,3:4)
 
 plot(vsivektorji{1,11}); 
-
+set(gca, "fontsize", 12)
 hold on
-  k=title("vektor razlik v obsegu ujemanja");
-  set (k, "fontsize", 15);
+%  k=title("vektor razlik v obsegu ujemanja");
+%  set (k, "fontsize", 15);
 %  axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   plot(126,vsivektorji{1,11}(126),'*','color','r'); 
 %  line ([0 numel(vsivektorji{1,10})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD vrednost","fontsize",17);
-  xlabel("Zamik","fontsize",17);
+  ylabel("MAD vrednost","fontsize",13);
+  xlabel("Zamik","fontsize",13);
 hold off
   print(f,"/home/arun/latex/diploma_rework/slike/slaboujemanjetestniprimer2.png", '-dpngcairo')
 
@@ -856,15 +874,15 @@ bvid = load("B"); drugi_videoposnetek=bvid.drugi_videoposnetek;clear bvid
 
 close all
 graphics_toolkit("gnuplot")
-treshold=0.5;
+treshold=1;
 f=figure(1);
 plot(vsivektorji{1,1});
 treshold = 1;
 xlabel("Indeks razlik med sličicami" ,"fontsize",17);
 ylabel("Razlika med \n podvzorčenimi sličicami","fontsize",17);
 set(gca, "fontsize", 12)
-line ([0 numel(vsivektorji{1,1})], [treshold treshold], "linestyle", "--", "color", "b");
-text(100,treshold + 0.05,"Prag","fontsize",12)
+%line ([0 numel(vsivektorji{1,1})], [treshold treshold], "linestyle", "--", "color", "b");
+%text(100,treshold + 0.05,"Prag","fontsize",12)
 hold on;
 % plot(624,0.6,'*','color','r'); #znak 
 % text(628,0.6,"624","fontsize",10)
@@ -874,43 +892,66 @@ print(f,"/home/arun/latex/diploma_rework/slike/obseg_ujemanj.png", '-dpngcairo')
 
 
 #------------------------------------------- glavni plot test, za poglavje prikaz rezultatov
+avid = load("A"); prvi_videoposnetek=avid.prvi_videoposnetek;clear avid
+bvid = load("B"); drugi_videoposnetek=bvid.drugi_videoposnetek;clear bvid
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.5);seznam
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
+
+
 close all
 graphics_toolkit("gnuplot")
-figure(1);
-crna_slika(1:100,1:100)=1;
-crna_slika1(1:100,1:100)=1;
-crna_slika2(1:100,1:100)=1;
+f=figure(1);
 colormap("gray");
-%  f=figure(1, "visible", "off"); 
-subplot(2,2,1)
-hold on 
-%title("prvi video");
-h=title("prvi video");
-set (h, "fontsize", 17);
-imshow(prvi.podvzorcene_slike(:,:,1+250));
-hold off
-subplot(2,2,2)
-hold on 
-g=title("drugi video");
-set (g, "fontsize", 20);
-%title("drugi video");
-imshow(drugi.podvzorcene_slike(:,:,251+250));
-hold off
+%catt= cat(2,prvi.podvzorcene_slike(:,:,1+250),ones(54,10)*255,drugi.podvzorcene_slike(:,:,251+250));
+imwrite (prvi.podvzorcene_slike(:,:,1+250), "/home/arun/latex/diploma_rework/slike/ujemanje1.png");
+imwrite (drugi.podvzorcene_slike(:,:,251+250), "/home/arun/latex/diploma_rework/slike/ujemanje2.png");
+%subplot(2,2,1:2)
+%  hold on 
+%  imshow(catt)
+%  im = imshow(catt)
+%  h=title("prvi video                 drugi video");
+%  set (h, "fontsize", 15);
+  %subplot(2,2,1)
+  %  hold on 
+  %  h=title("prvi video");
+  %  set (h, "fontsize", 17);
+  %  imshow(prvi.podvzorcene_slike(:,:,1+250));
+  %  hold off
+  %subplot(2,2,2)
+  %  hold on 
+  %  g=title("drugi video");
+  %  set (g, "fontsize", 20);
+  %  %title("drugi video");
+  %  imshow(drugi.podvzorcene_slike(:,:,251+250));
+  %  hold off
 
-subplot(2,2,3:4)
-plot(vsivektorji{1,1}); 
-hold on
-  k=title("Obseg ujemanj");
-  set (k, "fontsize", 15);
+  hold off
+ % [StartX, StartY, Width, Height)
+%subplot(2,2,3:4)
+  plot(vsivektorji{1,1}); 
+  hold on
+%  k=title("Obseg ujemanj");
+%  set (k, "fontsize", 18);
   axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
+  set(gca, "fontsize", 12)
   plot(250,vsivektorji{1,1}(250),'*','color','r'); 
   line ([0 numel(vsivektorji{1,1})], [1 1], "linestyle", "--", "color", "b");
-  ylabel("MAD razlika","fontsize",17);
-  xlabel("Indeks razlik med sličicami","fontsize",17);
-hold off
+  ylabel("MAD razlika","fontsize",13);
+  xlabel("Indeks razlik med sličicami","fontsize",13);
+  hold off
+  
+%  print(f,"/home/arun/latex/diploma_rework/slike/test.tex", '-dpslatex')
+
 % saveas (f, "/home/arun/latex/diploma_rework/slike/ujemanje.png", "png")
 print(f,"/home/arun/latex/diploma_rework/slike/ujemanje.png", '-dpngcairo')
 
+ 
+ 
+
+ 
+ 
+ 
+ 
  
 #-----------------------testing utf
 close all
