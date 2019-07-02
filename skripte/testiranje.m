@@ -304,6 +304,12 @@ plot(x,b);
 
 #--------------------------------zakaj ni ujemanje tau 250
 
+#???pravilni podatki?
+q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
+pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);seznam
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
+
 close all
 graphics_toolkit("gnuplot")
 f=figure(1);
@@ -314,13 +320,13 @@ mad(prvi.podvzorcene_slike(:,:,index1),drugi.podvzorcene_slike(:,:,index2))
 subplot (1, 2, 1)
 imshow(prvi.podvzorcene_slike(:,:,index1))
   hold on
-  h=title("141-ta sličica A.mp4");
+  h=title("141. sličica A.mp4");
   set (h, "fontsize", 15);
   
 subplot (1, 2, 2)
 imshow(drugi.podvzorcene_slike(:,:,index2))
  
-  j=title("391-ta sličica B.mp4");
+  j=title("391. sličica B.mp4");
   set (j, "fontsize", 15);
   hold off
   print(f,"/home/arun/latex/diploma_rework/slike/podobnislicici.png", '-dpngcairo')
