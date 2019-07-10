@@ -95,25 +95,6 @@ obseg_ujemanja
 [ vektor_razlik newImg indexvektor] = primerjanje_slik (prvi,drugi,vsivektorji{1,11},seznam(11),5)
 
 system(["vlc animation/anim625.mp4"])
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  
 
@@ -985,8 +966,8 @@ graphics_toolkit("gnuplot")
 f=figure(1);
 colormap("gray");
 %catt= cat(2,prvi.podvzorcene_slike(:,:,1+250),ones(54,10)*255,drugi.podvzorcene_slike(:,:,251+250));
-imwrite (prvi.podvzorcene_slike(:,:,1+250), "/home/arun/latex/diploma_rework/slike/ujemanje1.png");
-imwrite (drugi.podvzorcene_slike(:,:,251+250), "/home/arun/latex/diploma_rework/slike/ujemanje2.png");
+%imwrite (prvi.podvzorcene_slike(:,:,1+250), "/home/arun/latex/diploma_rework/slike/ujemanje1.png");
+%imwrite (drugi.podvzorcene_slike(:,:,251+250), "/home/arun/latex/diploma_rework/slike/ujemanje2.png");
 %subplot(2,2,1:2)
 %  hold on 
 %  imshow(catt)
@@ -1017,7 +998,7 @@ imwrite (drugi.podvzorcene_slike(:,:,251+250), "/home/arun/latex/diploma_rework/
   axis ([0 numel(vsivektorji{1,1}) 0 max(vsivektorji{1,1})],"manual");
   set(gca, "fontsize", 12)
   plot(250,vsivektorji{1,1}(250),'*','color','r'); 
-  line ([0 numel(vsivektorji{1,1})], [1 1], "linestyle", "--", "color", "b");
+  line ([0 numel(vsivektorji{1,1})], [0.5 0.5], "linestyle", "--", "color", "b");
   ylabel("MAD razlika","fontsize",13);
   xlabel("Indeks razlik med sličicami","fontsize",13);
   hold off

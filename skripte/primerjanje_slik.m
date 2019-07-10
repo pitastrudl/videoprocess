@@ -17,14 +17,14 @@ indexvektor= [];
    i=1;
   for j = zacetek_prvi:konec_prvi
     madrazlika= mad(prvi.podvzorcene_slike(:,:,j) , drugi.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi));
-     indexvektor(i)=0;
-  if ( madrazlika <  treshold)
+%     indexvektor(i)=0;
+%  if ( madrazlika <  treshold)
     indexvektor(i)=1;
     
     newImg(:,:,end +1) = imresize([ prvi.podvzorcene_slike(:,:,j) drugi.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi)] ,1);
-%    imshow( imresize([ prvi.podvzorcene_slike(:,:,j) drugi.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi)] ,1))
-%    vektor_razlik = find(vektor < treshold); #notri dobimo indekse kjer je treshold vredu!
-  endif
+            %    imshow( imresize([ prvi.podvzorcene_slike(:,:,j) drugi.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi)] ,1))
+            %    vektor_razlik = find(vektor < treshold); #notri dobimo indekse kjer je treshold vredu!
+  %  endif
 i++;
 endfor
 
