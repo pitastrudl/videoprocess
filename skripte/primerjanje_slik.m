@@ -21,8 +21,8 @@ indexvektor= [];
   if ( madrazlika <  treshold)
     indexvektor(i)=1;
     
-    
     newImg(:,:,end +1) = imresize([ prvi.podvzorcene_slike(:,:,j) drugi.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi)] ,1);
+%    imshow( imresize([ prvi.podvzorcene_slike(:,:,j) drugi.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi)] ,1))
 %    vektor_razlik = find(vektor < treshold); #notri dobimo indekse kjer je treshold vredu!
   endif
 i++;
@@ -38,10 +38,10 @@ for i=1:length(indexvektor)  #tukaj naredit, z vektor_razlik, ko bo kazu in ne.
   f=figure(1, "visible", "off"); 
   subplot(2,1,1)
   if(indexvektor(i)) #če je true
-    imshow(newImg(:,:,j));
+    imshow(newImg(:,:,j),[0 255]);
     j++;
   else
-    imshow(crna_slika);
+    imshow(crna_slika,[0 255]);
   endif
 %  h=text(numel(vektor)*0.20,-0.2,"prvi video");
 %  h=title("prvi video");
@@ -55,7 +55,7 @@ for i=1:length(indexvektor)  #tukaj naredit, z vektor_razlik, ko bo kazu in ne.
   plot(vektor); 
   axis ([0 numel(vektor) 0 max(vektor)],"manual");
   hold on;
-   text(200,0.55,"Prag","fontsize",12)
+   text(200,5,"Prag","fontsize",12)
   plot(i,vektor(i),'*','color','r'); #znak 
   line ([0 numel(vektor)], [treshold treshold], "linestyle", "--", "color", "b");
 

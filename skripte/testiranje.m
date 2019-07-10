@@ -36,8 +36,6 @@ endif
 %konglomerat = load("konglomeratflv"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
 %izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez
 
-
-
 %A = load("A"); prvi_videoposnetek=A.prvi_videoposnetek;clear A
 %B = load("B"); drugi_videoposnetek=B.drugi_videoposnetek;clear B
 
@@ -59,6 +57,70 @@ endif
 %lepljenje({"s1.mp4";"t1.mp4";"s2.mp4";"t2.mp4";"s3.mp4"},"dva_ujemanja.mp4")
 
 %konglomerat = load("konglomerat_resized"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+prvi_videoposnetek = predprocesiranje("izrez.mp4");
+drugi_videoposnetek = predprocesiranje("konglomerat_resized.mp4");
+
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);seznam
+
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);
+
+obseg_ujemanja
+
+[ vektor_razlik newImg indexvektor] = primerjanje_slik (prvi,drugi,vsivektorji{1,11},seznam(11),5)
+
+system(["vlc animation/anim625.mp4"])
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
 konglomerat = load("konglomeratflv"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
 konglomerat = load("konglomeratmp4"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
 konglomerat = load("konglomeratmpeg4"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
@@ -76,7 +138,6 @@ prvi_videoposnetek.vektor_sprememb = arrayfun(@rezaj_kandidate,prvi_videoposnete
 
 q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
 pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
-
 
 
 avid = load("A"); prvi_videoposnetek=avid.prvi_videoposnetek;clear avid
@@ -375,8 +436,8 @@ subplot(2,3,5:6)
 q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
 pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
 [b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);seznam
-[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
-[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,20,25);obseg_ujemanja
+%[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,5,25);obseg_ujemanja
+%[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,20,25);obseg_ujemanja
 [vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,30,25);obseg_ujemanja
 
 f=figure(1);
@@ -419,14 +480,29 @@ subplot(2,3,5:6)
   
   
   
+ #------mar in mad tau 250
+  q = load("q"); prvi_videoposnetek=q.prvi_videoposnetek;clear q
+pr = load("pr"); drugi_videoposnetek=pr.drugi_videoposnetek;clear pr
+[b seznam prvi drugi]= iskanje_kandidatov(drugi_videoposnetek,prvi_videoposnetek,0.1);seznam
+[vsivektorji,zamik,obseg_ujemanja] =iskanje_ujemanj(seznam,prvi,drugi,30,25);obseg_ujemanja
   
-  
-  
-  
-  
-  
-  
-  
+%  marr= vsivektorji;
+  f=figure(1);
+  hold on
+  h=title("Tau 250");
+  set (h, "fontsize", 20);
+  plot(madd{1,19},";MAD;");
+%  hh = legend ({"tau z MAD"},"tau z MAR" );
+%  legend (hh, "location", "southoutside");
+  # pol nastimi za mar
+  plot(marr{1,19},";MAR;");
+  hold off
+ 
+  legend("show");
+   set(gca, "fontsize", 10);
+   print(f,"/home/arun/latex/diploma_rework/slike/marmad.png", '-dpng')
+   
+   
 #-----------------------plot za testni primer undersample
 konglomerat = load("konglomerat_resized"); prvi_videoposnetek=konglomerat.prvi_videoposnetek;clear konglomerat
 izrez = load("izrez"); drugi_videoposnetek=izrez.drugi_videoposnetek;clear izrez

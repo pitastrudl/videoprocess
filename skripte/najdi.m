@@ -10,7 +10,6 @@ stevilo_ujemanj = 10;
 printf("  ni bil nastiman stevilo_ujemanj, default='%d' \n",stevilo_ujemanj)
 endif
 
-
 #kreacija structov ,generacija podatkov 
 prvi_videoposnetek = predprocesiranje(a);
 drugi_videoposnetek = predprocesiranje(b);

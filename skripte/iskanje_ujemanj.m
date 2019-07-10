@@ -32,7 +32,7 @@ function [vsivektorji,zamik,ujemanja] = iskanje_ujemanj(seznam_zamikov, prvivekt
     i
     aaaa="";
     for j = zacetek_prvi:konec_prvi
-      primerjalni_vektor(end+1)= mad(prvivektor.podvzorcene_slike(:,:,j) , drugivektor.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi));
+    primerjalni_vektor(end+1)= mad(prvivektor.podvzorcene_slike(:,:,j) , drugivektor.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi));
 %      primerjalni_vektor(end+1)= mar(prvivektor.podvzorcene_slike(:,:,j) , drugivektor.podvzorcene_slike(:,:,j+zacetek_drugi-zacetek_prvi));
     endfor
     vsivektorji{i}=primerjalni_vektor; # hranimo, samo ker smo radovedni
